@@ -14,18 +14,27 @@ namespace Atividade_Angelo_01
         {
             UtilClass util = new UtilClass();
 
+            //___________________________________________________________________________________
+            //___________________________________________________________________________________
+            //___________________________________________________________________________________
+
             string nome = util.LerString("Digite seu nome: ");
             string sobrenome = util.LerString("Digite seu sobrenome: ");
-            DateTime datanascimento = util.LerData("Digite a data de nascimento: "); // retorna {dd/mm/aaaa 00:00:00} 
+            DateTime datanascimento = util.LerData("Digite a data de nascimento: "); // retorna o nascimento {dd/mm/aaaa 00:00:00} 
+            Console.WriteLine($"Idade é de {util.CalculaIdade(datanascimento)} anos"); // Carregar a data de nascimento e calcular a idade
             string cpf = util.LerCPF("Digite o CPF: ");
             string rg = util.LerString("Digite o RG: ");
             string endereco = util.LerString("Digite o endereço: ");
-            ////------
 
-            Console.WriteLine($"Idade é de {util.CalculaIdade(datanascimento)} anos");
+            //___________________________________________________________________________________
+            //___________________________________________________________________________________
+            //___________________________________________________________________________________
 
+            
+            //armazenar a pessoa 
+            List <Pessoa> pessoaList = new List<Pessoa>();
+            pessoaList.Add(new Pessoa(nome,sobrenome, datanascimento,cpf,rg,endereco));
 
-            //Carregar a data de nascimento e calcular a idade
 
             //// pessoa[pessoas.Length + 1]();
             //armazenaPessoa.Add(davi);

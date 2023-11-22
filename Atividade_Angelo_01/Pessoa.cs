@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,19 +15,25 @@ namespace Atividade_Angelo_01
         private int codigo { get; set; }
         private string nome { get; set; }
         private string sobrenome { get; set; }
-        private DateTime dataDascimento { get; set; }
+        private DateTime dataNascimento { get; set; }
         private string CPF { get; set; }
         private string RG { get; set; }
         private string endereco { get; set; }
 
 
-        List<Pessoa> pessoaList;
+        List<Pessoa> pessoasList = new List<Pessoa>();
 
 
-        public Pessoa()
+        public Pessoa(string nome, string sobrenome, DateTime dataNasc, string cpf, string rg, string endereco)
         {
-
-        }
+            this.nome = nome;
+            this.sobrenome = sobrenome;
+            this.dataNascimento = dataNasc;
+            this.CPF = cpf;
+            this.RG = rg;
+            this.endereco = endereco;
+        } 
+        
 
 
         public Pessoa(int codigo)
@@ -34,22 +42,13 @@ namespace Atividade_Angelo_01
         }
 
 
-        public Pessoa(string nome)
-        {
-            this.nome = nome;
-        }
+        public Pessoa() { }
 
 
         public Pessoa(string nome, DateTime dataDascimento)
         {
             this.nome = nome;
-            this.dataDascimento = dataDascimento;
-        }
-
-
-        public Pessoa(string[] strings)
-        {
-
+            this.dataNascimento = dataDascimento;
         }
 
 
