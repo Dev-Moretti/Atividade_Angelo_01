@@ -55,8 +55,10 @@ namespace Atividade_Angelo_01
             {
                 Console.WriteLine($"{pergunta} > AAAA/MM/DD < :");
                 DateTime data = DateTime.Parse(Console.ReadLine());
+                
+                DateTime dataNow = DateTime.Now;
 
-                if (data != null)
+                if (data != null && dataNow >= data)
                 {
                     return data;
                 }
@@ -94,7 +96,25 @@ namespace Atividade_Angelo_01
             }
         }
 
+        public int CalculaIdade(DateTime dataNacimento)
+        {
+            DateTime dataNow = DateTime.Now;
 
+            int idade = dataNow.Year - dataNacimento.Year;
+
+            if (dataNow.Month < dataNacimento.Month)
+            {
+                return idade - 1;
+            }
+            else if (dataNow.Month == dataNacimento.Month)
+            {
+                if (dataNow.Day < dataNacimento.Day)
+                {
+                    return idade - 1;
+                }
+            }
+               return idade;
+        }
 
 
     }

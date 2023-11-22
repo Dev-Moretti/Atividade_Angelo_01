@@ -8,6 +8,8 @@ namespace Atividade_Angelo_01
 {
     internal class Pessoa
     {
+
+
         private int codigo { get; set; }
         private string nome { get; set; }
         private string sobrenome { get; set; }
@@ -16,12 +18,15 @@ namespace Atividade_Angelo_01
         private string RG { get; set; }
         private string endereco { get; set; }
 
+
+        List<Pessoa> pessoaList;
+
+
         public Pessoa()
         {
 
         }
 
-        List<Pessoa> pessoaList;
 
         public Pessoa(int codigo)
         {
@@ -46,8 +51,6 @@ namespace Atividade_Angelo_01
         {
 
         }
-
-
 
 
         public void setNome(string v)
@@ -78,18 +81,6 @@ namespace Atividade_Angelo_01
         {
             return (!String.IsNullOrEmpty(this.sobrenome));
         }
-
-
-        public int CalculaIdade()
-        {
-            int idade = 0;
-            return idade;
-            //Calcular a idade da pessoa em anos
-        }
-
-
-
-
 
         public override string ToString()
         {
