@@ -24,7 +24,7 @@ namespace Atividade_Angelo_01
         List<Pessoa> pessoasList = new List<Pessoa>();
 
 
-        public Pessoa(string nome, string sobrenome, DateTime dataNasc, string cpf, string rg, string endereco)
+        public Pessoa(string nome,string sobrenome,DateTime dataNasc,string cpf,string rg,string endereco)
         {
             this.nome = nome;
             this.sobrenome = sobrenome;
@@ -45,7 +45,7 @@ namespace Atividade_Angelo_01
         public Pessoa() { }
 
 
-        public Pessoa(string nome, DateTime dataDascimento)
+        public Pessoa(string nome,DateTime dataDascimento)
         {
             this.nome = nome;
             this.dataNascimento = dataDascimento;

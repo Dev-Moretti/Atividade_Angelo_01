@@ -30,11 +30,9 @@ namespace Atividade_Angelo_01
             //___________________________________________________________________________________
             //___________________________________________________________________________________
 
-            
-            //armazenar a pessoa 
-            List <Pessoa> pessoaList = new List<Pessoa>();
-            pessoaList.Add(new Pessoa(nome,sobrenome, datanascimento,cpf,rg,endereco));
 
+            //armazenar a pessoa 
+            List<Pessoa> pessoaList = new List<Pessoa> { new Pessoa(nome, sobrenome, datanascimento, cpf, rg, endereco) };
 
             //// pessoa[pessoas.Length + 1]();
             //armazenaPessoa.Add(davi);
