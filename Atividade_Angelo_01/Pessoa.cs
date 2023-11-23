@@ -10,28 +10,32 @@ namespace Atividade_Angelo_01
 {
     internal class Pessoa
     {
-        private int Codigo;
+        public int Codigo { get; protected set; }
         public string Nome { get; protected set; }
         public string Sobrenome { get; protected set; }
         public DateTime DataNascimento { get; protected set; }
+        public int Idade { get; protected set; }
         public string CPF { get; protected set; }
         public string RG { get; protected set; }
         public string Endereco { get; protected set; }
-        public int Telefone { get; protected set; }
+        public string Telefone { get; protected set; }
 
-
+         
 
         public Pessoa() { }
 
 
-        public Pessoa(string nome,string sobrenome,DateTime dataNasc,string cpf,string rg,string endereco)
+        public Pessoa(int codigo, string nome,string sobrenome,DateTime dataNasc,int idade, string cpf,string rg,string endereco,string telefone)
         {
+            this.Codigo = codigo;
             this.Nome = nome;
             this.Sobrenome = sobrenome;
             this.DataNascimento = dataNasc;
+            this.Idade = idade;
             this.CPF = cpf;
             this.RG = rg;
             this.Endereco = endereco;
+            this.Telefone = telefone;
         } 
         
 

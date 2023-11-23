@@ -11,7 +11,7 @@ namespace Atividade_Angelo_01
     {
         public string CNPJ {  get; private set; }
 
-        public Empresa(string nome, string cnpj, string endereco, int telefone) 
+        public Empresa(string nome, string cnpj, string endereco, string telefone) 
         {
             Nome = nome;
             this.CNPJ = cnpj;
