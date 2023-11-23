@@ -10,18 +10,18 @@ namespace Atividade_Angelo_01
 {
     internal class Pessoa
     {
-
-
-        private int codigo { get; set; }
-        private string nome { get; set; }
-        private string sobrenome { get; set; }
-        private DateTime dataNascimento { get; set; }
-        private string CPF { get; set; }
-        private string RG { get; set; }
-        private string endereco { get; set; }
+        private int codigo;
+        public string nome { get; private set; }
+        public string sobrenome { get; private set; }
+        public DateTime dataNascimento { get; private set; }
+        public string CPF { get; private set; }
+        public string RG { get; private set; }
+        public string endereco { get; private set; }
 
 
         List<Pessoa> pessoasList = new List<Pessoa>();
+
+        public Pessoa() { }
 
 
         public Pessoa(string nome,string sobrenome,DateTime dataNasc,string cpf,string rg,string endereco)
@@ -35,14 +35,10 @@ namespace Atividade_Angelo_01
         } 
         
 
-
         public Pessoa(int codigo)
         {
-            this.codigo = codigo;
+            setCodigo(codigo);
         }
-
-
-        public Pessoa() { }
 
 
         public Pessoa(string nome,DateTime dataDascimento)
@@ -52,34 +48,24 @@ namespace Atividade_Angelo_01
         }
 
 
-        public void setNome(string v)
+        private void setCodigo(int cod)
         {
-            this.nome = v;
+            if (cod != 0 && cod != this.codigo)
+            {
+                this.codigo = cod;
+            }
         }
 
-
-        public void setCPF(string v)
-        {
-            this.CPF = v;
+        public int getCodigo() 
+        { 
+            return this.codigo; 
         }
-
-
-        public string getSobrenome()
-        {
-            return this.sobrenome;
-        }
-
-
-        public void setSobrenome(string v)
-        {
-            this.sobrenome = v;
-        }
-
 
         public bool TemSobrenome()
         {
             return (!String.IsNullOrEmpty(this.sobrenome));
         }
+
 
         public override string ToString()
         {
