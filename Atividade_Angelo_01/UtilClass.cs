@@ -45,6 +45,7 @@ namespace Atividade_Angelo_01
                 else
                 {
                     Console.WriteLine("Valor invalido!");
+                    Console.WriteLine("Apenas Números!");
                 }
             }
         }
@@ -92,6 +93,31 @@ namespace Atividade_Angelo_01
                 else
                 {
                     Console.WriteLine($" O CPF -> {cpf} é invalido");
+                }
+            }
+        }
+
+        public string LerCNPJ(string mensagem)
+        {
+            Controller controller = new Controller();
+            bool valida = false;
+            
+            while (true)
+            {
+                Console.Write(mensagem);
+                string cnpj = Console.ReadLine();
+                
+                if (string.IsNullOrEmpty(cnpj) && cnpj.Count() == 14) 
+                {
+                    valida = controller.TemCNPJValido(cnpj);
+                }
+                if (valida)
+                {
+                    return cnpj;
+                }
+                else
+                {
+                    Console.WriteLine($" O CNPJ -> {cnpj} é invalido");
                 }
             }
         }
