@@ -73,7 +73,7 @@ namespace Atividade_Angelo_01
 
         public string LerCPF(string mensagem)
         {
-            Controller controller = new Controller();
+             
             bool valida = false;
 
             while (true)
@@ -83,7 +83,7 @@ namespace Atividade_Angelo_01
 
                 if (!string.IsNullOrEmpty(cpf) && cpf.Count() == 11)
                 {
-                    valida = controller.TemCPFValido(cpf);
+                    valida = TemCPFValido(cpf);
                 }
 
                 if (valida)
@@ -99,7 +99,6 @@ namespace Atividade_Angelo_01
 
         public string LerCNPJ(string mensagem)
         {
-            Controller controller = new Controller();
             bool valida = false;
             
             while (true)
@@ -109,7 +108,7 @@ namespace Atividade_Angelo_01
                 
                 if (!string.IsNullOrEmpty(cnpj) && cnpj.Count() == 14) 
                 {
-                    valida = controller.TemCNPJValido(cnpj);
+                    valida = TemCNPJValido(cnpj);
                 }
                 if (valida)
                 {
@@ -248,6 +247,11 @@ namespace Atividade_Angelo_01
             }
 
 
+        }
+
+        public void LimpConsl()
+        {
+            Console.Clear();
         }
 
 

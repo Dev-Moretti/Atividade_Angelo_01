@@ -13,15 +13,13 @@ namespace Atividade_Angelo_01
 
         public string SenhaUser { get; private set; }
 
+        public User() { }
 
-
-        public User(string nomeUsu, string senhaUsu)
+        public User(int codigo, string nomeUsu, string senhaUsu)
         {
-            if (nomeUsu != null)
-            {
-                NomeUser = nomeUsu;
-                SenhaUser = senhaUsu;
-            }
+            Codigo = codigo;
+            NomeUser = nomeUsu;
+            SenhaUser = senhaUsu;
         }
 
         public bool LoguinUser(string user, string senha)

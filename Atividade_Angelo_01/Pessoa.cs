@@ -21,11 +21,10 @@ namespace Atividade_Angelo_01
         public string Telefone { get; protected set; }
 
          
-
         public Pessoa() { }
 
 
-        public Pessoa(int codigo, string nome,string sobrenome,DateTime dataNasc,int idade, string cpf,string rg,string endereco,string telefone)
+        public Pessoa(int codigo, string nome, string sobrenome, DateTime dataNasc, int idade, string cpf, string rg, string endereco, string telefone)
         {
             this.Codigo = codigo;
             this.Nome = nome;
@@ -39,45 +38,22 @@ namespace Atividade_Angelo_01
         } 
         
 
-        public Pessoa(int codigo)
-        {
-            SetCodigo(codigo);
-        }
-
-
-        public Pessoa(string nome,DateTime dataDascimento)
-        {
-            this.Nome = nome;
-            this.DataNascimento = dataDascimento;
-        }
-
-
-        private void SetCodigo(int cod)
-        {
-            if (cod != 0 && cod != this.Codigo)
-            {
-                this.Codigo = cod;
-            }
-        }
-
-        public int GetCodigo() 
-        { 
-            return this.Codigo; 
-        }
-
-
-
         public bool TemSobrenome()
         {
             return (!String.IsNullOrEmpty(this.Sobrenome));
         }
 
-
         public override string ToString()
         {
-            return $"Nome: {this.Nome} {this.Sobrenome};";
+            return $"\n____________________________" +
+                   $"\n Codigo: {this.Codigo}"+
+                   $"\n Nome: {this.Nome} {this.Sobrenome}" +
+                   $"\n Idade: {this.Idade} ano(s)" +
+                   $"\n CPF: {this.CPF}" +
+                   $"\n Telefone: {this.Telefone}" +
+                   $"\n Endereço: {this.Endereco}" +
+                   $"\n____________________________";
         }
-
 
     }
 }

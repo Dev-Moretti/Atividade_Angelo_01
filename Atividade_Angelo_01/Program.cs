@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Linq;
@@ -9,13 +10,110 @@ using System.Threading.Tasks;
 namespace Atividade_Angelo_01
 {
     internal class Program
-    { 
+    {
         static List<Pessoa> listPessoas = new List<Pessoa>();
-    
-        static public void Cadastrar(int tipoCad)
-        {
-            UtilClass util = new UtilClass();
+        static List<Empresa> listEmpresa = new List<Empresa>();
+        static List<User> listUser = new List<User>();
 
+        static UtilClass util = new UtilClass();
+
+        static void MenuPrincipal()
+        {
+            util.LimpConsl();
+
+            bool parar = false;
+            int escolha;
+
+            while (parar == false)
+            {
+                Console.WriteLine("Digite a opção desejada!");
+                Console.WriteLine("_________________________");
+                Console.WriteLine("  -> 1 - Cadastros " +
+                                "\n  -> 2 - Listagens " +
+                                "\n  -> 3 - Buscar    " +
+                                "\n  -> 4 - Remover   " +
+                                "\n  -> 5 - SAIR   ");
+                Console.WriteLine("_________________________");
+
+                int.TryParse(Console.ReadLine(), out escolha);
+                
+                if (escolha <= 5)
+                {
+                    if (escolha == 0)
+                    {
+                        parar = false;
+                    }
+                    else
+                    {
+                        switch (escolha)
+                        {
+                            case 1:
+                                MenuCadastrar();
+                                break;
+
+                            case 2:
+                                MenuListagem();
+                                break;
+
+                            case 3:
+                                MenuBuscar();
+                                break;
+
+                            case 4:
+                                //Remover();
+                                break;
+
+                            case 5:
+                                parar = true;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        static void MenuCadastrar()
+        {
+            util.LimpConsl();
+
+            bool parar = false;
+
+            while (parar == false)
+            {
+                Console.WriteLine("_________________________");
+                Console.WriteLine("Qual cadastro deseja acessar? " +
+                                "\n  -> 1 - Cadastro de Pessoa "  +
+                                "\n  -> 2 - Cadastro de Empresa " +
+                                "\n  -> 3 - Cadastro de Usuario " +
+                                "\n  -> 4 - Voltar ");
+                Console.WriteLine("_________________________");
+                int escolha;
+
+                int.TryParse(Console.ReadLine(), out escolha);
+
+                if (escolha == 0)
+                {
+                    parar = false;
+                }
+
+                if (escolha > 0 && escolha <= 3)
+                {
+                    Cadastrar(escolha);
+                    parar = true;
+                }
+
+                if (escolha == 4)
+                {
+                    MenuPrincipal();
+                    parar = true;
+                }
+
+            }
+        }
+
+        static void Cadastrar(int tipoCad)
+        {
+            int codigo;
             string nome;
             string sobrenome;
             DateTime dataNascimento;
@@ -28,13 +126,15 @@ namespace Atividade_Angelo_01
             string user;
             string senha;
 
+            util.LimpConsl();
 
             switch (tipoCad)
             {
                 case 1: // cadastro de pessoa
-
-                    nome = util.LerString("Digite seu nome: ");
-                    sobrenome = util.LerString("Digite seu sobrenome: ");
+                    Console.WriteLine("Cadastrando pessoa:");
+                    codigo = util.LerInt("Digite o codigo da pessoa a ser cadastrada: ");
+                    nome = util.LerString("Digite o nome: ");
+                    sobrenome = util.LerString("Digite o sobrenome: ");
                     dataNascimento = util.LerData("Digite a data de nascimento: "); // retorna o nascimento {dd/mm/aaaa 00:00:00} 
                     idade = util.CalculaIdade(dataNascimento);
                     Console.WriteLine($"Idade é de {idade} anos"); // Carregar a data de nascimento e calcular a idade
@@ -42,104 +142,183 @@ namespace Atividade_Angelo_01
                     rg = util.LerString("Digite o RG: ");
                     endereco = util.LerString("Digite o endereço: ");
                     telefone = util.LerString("Digite o numero do telefone/celular: ");
-                                        
-                    listPessoas.Add(new Pessoa(1, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
-                    listPessoas.Add(new Pessoa(2, "Alisson", sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
 
-                    Console.WriteLine(listPessoas.Find(p => p.Codigo == 1));
+                    listPessoas.Add(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
+                    MenuPrincipal();
 
                     break;
 
                 case 2: // cadastro de empresa
 
+                    Console.WriteLine("Cadastrando empresa:");
+                    codigo = util.LerInt("Digite o codigo da empresa: ");
                     nome = util.LerString("Digite o nome da empresa: ");
-                    dataNascimento = util.LerData("Digite a data de abertura: ");
                     cnpj = util.LerCNPJ("Digite o CNPJ da empresa: ");
                     endereco = util.LerString("Digite o endereço: ");
                     telefone = util.LerString("Digite o telefone: ");
 
+                    listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
+                    MenuPrincipal();
 
-                break;
+                    break;
 
                 case 3: // cadastro de user
-
+                    Console.WriteLine("Cadastrando Usuario:");
+                    codigo = util.LerInt("Digite o codigo do usuario: ");
                     user = util.LerString("Digite o nome de usuario: ");
                     senha = util.LerString("Digite a senha: ");
 
-                break;
+                    listUser.Add(new User(codigo, user, senha));
+                    MenuPrincipal();
+
+                    break;
 
             }
-
-           
-            //armazenar a pessoa 
-            // List<Pessoa> pessoaList = new List<Pessoa> { new Pessoa(nome, sobrenome, datanascimento, cpf, rg, endereco) };
-
-
-
         }
 
-        static public int MenuCadastrar()
+        static void MenuListagem()
         {
-            Console.Write("Qual cadastro dejesa acessar? " +
-                            "\n 1 -> Cadastro de Pessoa" +
-                            "\n 2 -> Cadastro de Empresa" +
-                            "\n 3 -> Cadastro de Usuario \n");
+            util.LimpConsl();
+            bool parar = false;
 
-             return int.Parse(Console.ReadLine());
-        }
-        
-        static public int MenuLeitura()
-        {
-            Console.Write("Qual leitura dejesa acessar? " +
-                            "\n 1 -> Leirura de Pessoas" +
-                            "\n 2 -> Leitura de Empresas" +
-                            "\n 3 -> Leitura de Usuarios \n");
-
-             return int.Parse(Console.ReadLine());
-        }
-
-        static public void LerCadastro(int tipoCad)
-        {
-            //Console.Clear();
-            
-            Controller c = new Controller();
-
-            switch (tipoCad)
+            while (parar == false)
             {
-                case 1:
-                    Console.WriteLine(c.GetCadPessoa());
+                Console.WriteLine("_________________________");
+                Console.WriteLine("Qual listagem deseja acessar? " +
+                                "\n  -> 1 - Lista de Pessoas "  +
+                                "\n  -> 2 - Lista de Empresas " +
+                                "\n  -> 3 - Lista de Usuarios " +
+                                "\n  -> 4 - Voltar ");
+                Console.WriteLine("_________________________");
+                
+                int escolha;
 
-                break;
+                int.TryParse(Console.ReadLine(), out escolha);
 
-                case 2:
+                if (escolha <= 3)
+                {
+                    if(escolha == 0)
+                    {
+                        parar = false;
+                    }
+                    else
+                    {
+                        MenuBuscar();
+                        parar = true;
+                    }
 
-
-                break;
-
-                case 3:
-
-
-                break;
-
-
-
-
-
-
+                }
+                if (escolha == 4)
+                {
+                    parar = true;
+                    MenuPrincipal();
+                }
             }
+        }
+
+        static void Listagem(int escolha)
+        {
+            util.LimpConsl();
+
+            switch (escolha)
+            {
+                case 1: // pessoa
+                    
+
+                    break;
+
+                case 2: // empresa
 
 
+                    break;
 
+                case 3:  // usuario
+
+
+                    break;
+            }
+        }
+
+        
+        //static void Remover()
+        //{
+        //    switch (escolha)
+        //    {
+        //        case 1: // pessoa
+
+
+        //            break;
+
+        //        case 2: // empresa
+
+
+        //            break;
+
+        //        case 3:  // usuario
+
+
+        //            break;
+        //    }
+        //}
+
+        static void MenuBuscar()
+        {
+            int escolha;
+            bool parar = false;
+
+
+            while (parar == false)
+            {
+                Console.WriteLine("Escolha um dos filtros: ");
+                Console.WriteLine("__________________________");
+                Console.WriteLine(  "\n -> 1 - Codigo " 
+                                  + "\n -> 2 - Nome " 
+                                  + "\n -> 3 - Sobrenome " 
+                                  + "\n -> 4 - Telefone " 
+                                  + "\n -> 5 - CPF " 
+                                  + "\n -> 6 - CNPJ " 
+                                  + "\n -> 7 - VOLTAR \n");
+
+                int.TryParse(Console.ReadLine(), out escolha);
+
+                if (escolha == 0)
+                {
+                    parar = false;
+                }
+                else
+                {
+                    parar = true;
+
+                    switch (escolha)
+                    {
+                        case 1:
+                            int cod = util.LerInt("Digite o Codigo: ");
+
+                            Console.WriteLine(listPessoas.Find(p => p.Codigo == cod));
+
+
+                            break;
+
+                        
+                    }
+                }
+            }
+            
 
 
         }
+
 
         static void Main(string[] args)
         {
-           
-            Cadastrar(MenuCadastrar());
 
-            LerCadastro(MenuLeitura());
+            MenuPrincipal();
+
+           // Console.WriteLine(listPessoas.Find(p => p.Codigo == 1));
+
+            //Cadastrar(MenuCadastrar());
+
+            //LerCadastro(MenuLeitura());
 
             //// pessoa[pessoas.Length + 1]();
             //armazenaPessoa.Add(davi);
@@ -169,11 +348,6 @@ namespace Atividade_Angelo_01
             //{
             //    Console.WriteLine(pessoa.ToString());
             //}
-
-
-
-            
-            Console.ReadKey();
 
         }
     }
