@@ -21,7 +21,7 @@ namespace Atividade_Angelo_01
         static Empresa empresa = new Empresa();
         static User user = new User();
 
-        static void MenuPrincipal()
+        static void OqueFazer()
         {
             util.LimpConsl();
 
@@ -52,7 +52,7 @@ namespace Atividade_Angelo_01
                         switch (escolha)
                         {
                             case 1:
-                                MenuCadastrar();
+                                Cadastrar();
                                 break;
 
                             case 2:
@@ -76,46 +76,7 @@ namespace Atividade_Angelo_01
             }
         }
 
-        static void MenuCadastrar()
-        {
-            util.LimpConsl();
-
-            bool parar = false;
-
-            while (parar == false)
-            {
-                Console.WriteLine("_________________________");
-                Console.WriteLine("Qual cadastro deseja acessar? " +
-                                "\n  -> 1 - Cadastro de Pessoa "  +
-                                "\n  -> 2 - Cadastro de Empresa " +
-                                "\n  -> 3 - Cadastro de Usuario " +
-                                "\n  -> 4 - Voltar ");
-                Console.WriteLine("_________________________");
-                
-                int escolha;
-
-                int.TryParse(Console.ReadLine(), out escolha);
-
-                if (escolha == 0)
-                {
-                    parar = false;
-                }
-
-                if (escolha > 0 && escolha <= 3)
-                {
-                    Cadastrar(escolha);
-                    parar = true;
-                }
-
-                if (escolha == 4)
-                {
-                    MenuPrincipal();
-                    parar = true;
-                }
-            }
-        }
-
-        static void Cadastrar(int tipoCad)
+        static void Cadastrar()
         {
             int codigo;
             string nome;
@@ -129,11 +90,46 @@ namespace Atividade_Angelo_01
             string cnpj;
             string user;
             string senha;
+            
+            int escolha = 0;
 
             util.LimpConsl();
 
-            switch (tipoCad)
+            bool bo = true;
+
+            while (bo == true)
             {
+                Console.WriteLine("_________________________");
+                Console.WriteLine("Qual cadastro deseja acessar? " +
+                                "\n  -> 1 - Cadastro de Pessoa " +
+                                "\n  -> 2 - Cadastro de Empresa " +
+                                "\n  -> 3 - Cadastro de Usuario " +
+                                "\n  -> 4 - Voltar ");
+                Console.WriteLine("_________________________");
+
+                int.TryParse(Console.ReadLine(), out escolha);
+
+                if (escolha != 0)
+                {
+                    bo = false;
+                }
+
+                if (escolha == 4)
+                {
+                    OqueFazer();
+                }
+            }
+
+            Console.Clear();
+
+            switch (escolha)
+            {
+                case 0:
+
+                    Console.WriteLine("Invalido!");
+
+                    break;
+
                 case 1: // cadastro de pessoa
                     Console.WriteLine("Cadastrando pessoa:");
                     codigo = util.LerInt("Digite o codigo da pessoa a ser cadastrada: ");
@@ -148,7 +144,7 @@ namespace Atividade_Angelo_01
                     telefone = util.LerString("Digite o numero do telefone/celular: ");
 
                     listPessoas.Add(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
-                    MenuPrincipal();
+                    OqueFazer();
 
                     break;
 
@@ -162,7 +158,7 @@ namespace Atividade_Angelo_01
                     telefone = util.LerString("Digite o telefone: ");
 
                     listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
-                    MenuPrincipal();
+                    OqueFazer();
 
                     break;
 
@@ -173,7 +169,7 @@ namespace Atividade_Angelo_01
                     senha = util.LerString("Digite a senha: ");
 
                     listUser.Add(new User(codigo, user, senha));
-                    MenuPrincipal();
+                    OqueFazer();
 
                     break;
 
@@ -215,7 +211,7 @@ namespace Atividade_Angelo_01
                 if (escolha == 4)
                 {
                     parar = true;
-                    MenuPrincipal();
+                    OqueFazer();
                 }
             }
         }
@@ -361,7 +357,7 @@ namespace Atividade_Angelo_01
 
                             Console.WriteLine("VOLTANDO");
                             System.Threading.Thread.Sleep(1000);
-                            MenuPrincipal();
+                            OqueFazer();
                             break;
                     }
                 }
@@ -373,7 +369,7 @@ namespace Atividade_Angelo_01
         static void Main(string[] args)
         {
 
-            MenuPrincipal();
+            OqueFazer();
 
            // Console.WriteLine(listPessoas.Find(p => p.Codigo == 1));
 
