@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace Atividade_Angelo_01
         static List<User> listUser = new List<User>();
 
         static UtilClass util = new UtilClass();
+        static Pessoa pessoa = new Pessoa();
+        static Empresa empresa = new Empresa();
+        static User user = new User();
 
         static void MenuPrincipal()
         {
@@ -26,7 +30,7 @@ namespace Atividade_Angelo_01
 
             while (parar == false)
             {
-                Console.WriteLine("Digite a opção desejada!");
+                Console.WriteLine("\nDigite a opção desejada!");
                 Console.WriteLine("_________________________");
                 Console.WriteLine("  -> 1 - Cadastros " +
                                 "\n  -> 2 - Listagens " +
@@ -56,7 +60,7 @@ namespace Atividade_Angelo_01
                                 break;
 
                             case 3:
-                                MenuBuscar();
+                                buscarPessoa();
                                 break;
 
                             case 4:
@@ -87,6 +91,7 @@ namespace Atividade_Angelo_01
                                 "\n  -> 3 - Cadastro de Usuario " +
                                 "\n  -> 4 - Voltar ");
                 Console.WriteLine("_________________________");
+                
                 int escolha;
 
                 int.TryParse(Console.ReadLine(), out escolha);
@@ -107,7 +112,6 @@ namespace Atividade_Angelo_01
                     MenuPrincipal();
                     parar = true;
                 }
-
             }
         }
 
@@ -203,7 +207,7 @@ namespace Atividade_Angelo_01
                     }
                     else
                     {
-                        MenuBuscar();
+                        buscarPessoa();
                         parar = true;
                     }
 
@@ -261,51 +265,108 @@ namespace Atividade_Angelo_01
         //    }
         //}
 
-        static void MenuBuscar()
+        static void buscarPessoa()
         {
-            int escolha;
-            bool parar = false;
+            Console.Clear();
 
-
-            while (parar == false)
+            while (true)
             {
-                Console.WriteLine("Escolha um dos filtros: ");
+                Console.WriteLine("__________________________");
+                Console.WriteLine("\nEscolha um dos filtros: ");
                 Console.WriteLine("__________________________");
                 Console.WriteLine(  "\n -> 1 - Codigo " 
                                   + "\n -> 2 - Nome " 
                                   + "\n -> 3 - Sobrenome " 
                                   + "\n -> 4 - Telefone " 
                                   + "\n -> 5 - CPF " 
-                                  + "\n -> 6 - CNPJ " 
-                                  + "\n -> 7 - VOLTAR \n");
+                                  + "\n -> 6 - VOLTAR \n");
 
-                int.TryParse(Console.ReadLine(), out escolha);
+                int.TryParse(Console.ReadLine(), out int escolha);
 
-                if (escolha == 0)
+                if (escolha != 0)
                 {
-                    parar = false;
-                }
-                else
-                {
-                    parar = true;
-
                     switch (escolha)
                     {
                         case 1:
+
                             int cod = util.LerInt("Digite o Codigo: ");
 
-                            Console.WriteLine(listPessoas.Find(p => p.Codigo == cod));
+                            if (listPessoas.Find(p => p.Codigo == cod) != null)
+                            {
+                                Console.WriteLine(listPessoas.Find(p => p.Codigo == cod));
+                            }
+                            else
+                            {
+                                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
+                            }
+                            break;
+                        
+                        case 2:
 
+                            string nome = util.LerString("Digite o Nome: ");
 
+                            if (listPessoas.Find(p => p.Nome == nome) != null)
+                            {
+                                Console.WriteLine(listPessoas.Find(p => p.Nome == nome));
+                            }
+                            else
+                            {
+                                Console.WriteLine($"->  {nome}  <- Não foi encontrado!");
+                            }
+                            break;
+                        
+                        case 3:
+
+                            string sobrenome = util.LerString("Digite o Sobrenome: ");
+
+                            if(listPessoas.Find(p => p.Sobrenome == sobrenome) != null)
+                            {
+                                Console.WriteLine(listPessoas.Find(p => p.Sobrenome == sobrenome));
+                            }
+                            else
+                            {
+                                Console.WriteLine($"->  {sobrenome}  <- Não foi encontrado!");
+                            }
                             break;
 
-                        
+                        case 4:
+
+                            string telefone = util.LerString("Digite o Telefone: ");
+
+                            if (listPessoas.Find(p => p.Telefone == telefone) != null)
+                            {
+                                Console.WriteLine(listPessoas.Find(p => p.Telefone == telefone));
+                            }
+                            else
+                            {
+                                Console.WriteLine($"->  {telefone}  <- Não foi encontrado!");
+                            }
+                            break;
+
+                        case 5:
+
+                            string cpf = util.LerCPF("Digite o CPF: ");
+
+                            if(listPessoas.Find(p => p.CPF == cpf) != null)
+                            {
+                                Console.WriteLine(listPessoas.Find(p => p.CPF == cpf));
+                            }
+                            else
+                            {
+                                Console.WriteLine($"->  {cpf}  <- Não foi encontrado!");
+                            }
+                            break;
+
+                        case 6:
+
+                            Console.WriteLine("VOLTANDO");
+                            System.Threading.Thread.Sleep(1000);
+                            MenuPrincipal();
+                            break;
                     }
                 }
             }
             
-
-
         }
 
 
