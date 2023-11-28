@@ -42,6 +42,14 @@ namespace Atividade_Angelo_01
 
         }
 
+        public override string ToString()
+        {
+            return $"\n____________________________" +
+                   $"\n Codigo: {Codigo}" +
+                   $"\n Usuario: {NomeUser}" +
+                   $"\n____________________________";
+        }
+
 
     }
 }

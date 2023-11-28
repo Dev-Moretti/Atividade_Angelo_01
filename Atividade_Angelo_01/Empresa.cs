@@ -22,7 +22,16 @@ namespace Atividade_Angelo_01
             Telefone = telefone;
         }
 
-
+        public override string ToString()
+        {
+            return $"\n____________________________" +
+                   $"\n Codigo: {Codigo}" +
+                   $"\n Nome: {Nome}" +
+                   $"\n CNPJ: {this.CNPJ}" +
+                   $"\n Telefone: {this.Telefone}" +
+                   $"\n Endereço: {this.Endereco}" +
+                   $"\n____________________________";
+        }
 
 
     }
