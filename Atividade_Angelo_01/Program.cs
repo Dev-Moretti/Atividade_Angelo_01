@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -28,10 +29,9 @@ namespace Atividade_Angelo_01
         {
             util.LimpConsl();
 
-            bool parar = false;
             int escolha;
 
-            while (parar == false)
+            do
             {
                 Console.WriteLine("\nDigite a opção desejada!");
                 Console.WriteLine("_________________________");
@@ -44,53 +44,49 @@ namespace Atividade_Angelo_01
 
                 int.TryParse(Console.ReadLine(), out escolha);
 
-                if (escolha <= 5)
+
+                switch (escolha)
                 {
-                    if (escolha == 0)
-                    {
-                        parar = false;
-                    }
-                    else
-                    {
-                        switch (escolha)
-                        {
-                            case 1:
+                    case 1:
 
-                                util.LimpConsl();
-                                Cadastro();
+                        util.LimpConsl();
+                        Cadastro();
 
-                                break;
+                        break;
 
-                            case 2:
+                    case 2:
 
-                                util.LimpConsl();
-                                Listagem();
+                        util.LimpConsl();
+                        Listagem();
 
-                                break;
+                        break;
 
-                            case 3:
+                    case 3:
 
-                                util.LimpConsl();
-                                Busca();
+                        util.LimpConsl();
+                        Busca();
 
-                                break;
+                        break;
 
-                            case 4:
+                    case 4:
 
-                                util.LimpConsl();
-                                Remove();
+                        util.LimpConsl();
+                        Remove();
 
-                                break;
+                        break;
 
-                            case 5:
-                                parar = true;
-                                break;
-                        }
-                    }
+                    case 5:
+                        util.LimpConsl();
+                        Console.WriteLine("BYE");
+                        System.Threading.Thread.Sleep(2000);
+                        break;
+
+                    default:
+                        Console.WriteLine("Opção invalida!");
+                        break;
                 }
-            }
 
-
+            } while (escolha != 5);
         }
 
         static void Cadastro()
@@ -572,9 +568,11 @@ namespace Atividade_Angelo_01
 
         static void Remove()
         {
-            int escolha = util.LerOpcaoTipo("Remover");
+            int escolha = 4;
             do
             {
+                escolha = util.LerOpcaoTipo("Remover");
+
                 switch (escolha)
                 {
                     //pessoa
@@ -615,7 +613,7 @@ namespace Atividade_Angelo_01
             ListagemPessoa();
             int cod = util.LerInt("Digite o Codigo: ");
             pessoa = listPessoas.Find(p => p.Codigo == cod);
-            
+
             if (pessoa != null)
             {
                 Console.WriteLine(pessoa);
@@ -640,13 +638,13 @@ namespace Atividade_Angelo_01
             int cod = util.LerInt("Digite o Codigo: ");
             empresa = listEmpresa.Find(p => p.Codigo == cod);
 
-            if(empresa != null)
+            if (empresa != null)
             {
                 Console.WriteLine(empresa);
                 string resposta = util.LerString("Deseja deletar?  -> sim / nao <- ");
                 if (resposta == "sim")
                 {
-                    listPessoas.Remove(pessoa);
+                    listEmpresa.Remove(empresa);
                 }
             }
             else
@@ -683,7 +681,6 @@ namespace Atividade_Angelo_01
         static void Main(string[] args)
         {
             MenuPrincipal();
-
         }
     }
 }
