@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Atividade_Angelo_01
 {
@@ -21,7 +22,9 @@ namespace Atividade_Angelo_01
         static Empresa empresa = new Empresa();
         static User user = new User();
 
-        static void OqueFazer()
+
+
+        static void MenuPrincipal()
         {
             util.LimpConsl();
 
@@ -40,7 +43,7 @@ namespace Atividade_Angelo_01
                 Console.WriteLine("_________________________");
 
                 int.TryParse(Console.ReadLine(), out escolha);
-                
+
                 if (escolha <= 5)
                 {
                     if (escolha == 0)
@@ -52,19 +55,31 @@ namespace Atividade_Angelo_01
                         switch (escolha)
                         {
                             case 1:
-                                CadastroCompleto();
+
+                                util.LimpConsl();
+                                Cadastro();
+
                                 break;
 
                             case 2:
+
+                                util.LimpConsl();
                                 Listagem();
+
                                 break;
 
                             case 3:
-                                MenuBusca();
+
+                                util.LimpConsl();
+                                Busca();
+
                                 break;
 
                             case 4:
-                                //Remover();
+
+                                util.LimpConsl();
+                                Remove();
+
                                 break;
 
                             case 5:
@@ -74,517 +89,600 @@ namespace Atividade_Angelo_01
                     }
                 }
             }
+
+
         }
 
-        static void CadastroCompleto()
+        static void Cadastro()
         {
-            int codigo;
-            string nome;
-            string sobrenome;
-            DateTime dataNascimento;
-            int idade;
-            string cpf;
-            string rg;
-            string endereco;
-            string telefone;
-            string cnpj;
-            string user;
-            string senha;
-            
-            int escolha = 0;
+            int escolha = 4;
 
-            util.LimpConsl();
-
-            bool bo = true;
-
-            while (bo == true)
+            do
             {
-                Console.WriteLine("_________________________");
-                Console.WriteLine("Qual cadastro deseja acessar? " +
-                                "\n  -> 1 - Cadastro de Pessoa " +
-                                "\n  -> 2 - Cadastro de Empresa " +
-                                "\n  -> 3 - Cadastro de Usuario " +
-                                "\n  -> 4 - Voltar ");
-                Console.WriteLine("_________________________");
+                escolha = util.LerOpcaoTipo("Cadastro");
 
-                int.TryParse(Console.ReadLine(), out escolha);
-
-                if (escolha != 0)
+                switch (escolha)
                 {
-                    bo = false;
+                    case 1:
+
+                        util.LimpConsl();
+                        CadastroPessoa();
+
+                        break;
+
+                    case 2:
+
+                        util.LimpConsl();
+                        CadastroEmpresa();
+
+                        break;
+
+                    case 3:
+
+                        util.LimpConsl();
+                        CadastroUser();
+
+                        break;
+
+                    case 4:
+
+                        util.LimpConsl();
+                        Console.Write("VOLTANDO...");
+                        System.Threading.Thread.Sleep(1000);
+
+                        break;
+
+                    default:
+
+                        Console.WriteLine("Opção Invalida!!");
+
+                        break;
                 }
 
-                if (escolha == 4)
+
+            } while (escolha != 4);
+        }
+
+        static void CadastroPessoa()
+        {
+            Console.WriteLine("Cadastrando pessoa:");
+            int codigo = util.LerInt("Digite o codigo da pessoa a ser cadastrada: ");
+            string nome = util.LerString("Digite o nome: ");
+            string sobrenome = util.LerString("Digite o sobrenome: ");
+            DateTime dataNascimento = util.LerData("Digite a data de nascimento: "); // retorna o nascimento {dd/mm/aaaa 00:00:00} 
+            int idade = util.CalculaIdade(dataNascimento);
+            Console.WriteLine($"Idade é de {idade} anos"); // Carregar a data de nascimento e calcular a idade
+            string cpf = util.LerCPF("Digite o CPF: ");
+            string rg = util.LerString("Digite o RG: ");
+            string endereco = util.LerString("Digite o endereço: ");
+            string telefone = util.LerString("Digite o numero do telefone/celular: ");
+
+            listPessoas.Add(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
+        }
+
+        static void CadastroEmpresa()
+        {
+            Console.WriteLine("Cadastrando empresa:");
+            int codigo = util.LerInt("Digite o codigo da empresa: ");
+            string nome = util.LerString("Digite o nome da empresa: ");
+            string cnpj = util.LerCNPJ("Digite o CNPJ da empresa: ");
+            string endereco = util.LerString("Digite o endereço: ");
+            string telefone = util.LerString("Digite o telefone: ");
+
+            listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
+        }
+
+        static void CadastroUser()
+        {
+            Console.WriteLine("Cadastrando Usuario:");
+            int codigo = util.LerInt("Digite o codigo do usuario: ");
+            string user = util.LerString("Digite o nome de usuario: ");
+            string senha = util.LerString("Digite a senha: ");
+
+            listUser.Add(new User(codigo, user, senha));
+        }
+
+        static void Listagem()
+        {
+            int escolha = 4;
+
+            do
+            {
+
+                escolha = util.LerOpcaoTipo("Listagem");
+
+                switch (escolha)
                 {
-                    OqueFazer();
+                    case 1:
+
+                        util.LimpConsl();
+                        ListagemPessoa();
+
+                        break;
+
+                    case 2: // empresa
+
+                        util.LimpConsl();
+                        ListagemEmpresa();
+
+                        break;
+
+                    case 3:  // usuario
+
+                        util.LimpConsl();
+                        ListagemUsuario();
+
+                        break;
+
+                    case 4:
+                        Console.WriteLine("VOLTANDO...");
+                        System.Threading.Thread.Sleep(1000);
+                        util.LimpConsl();
+                        break;
+
+                    default:
+                        Console.WriteLine("Opção Invalida!!");
+                        break;
+                }
+            } while (escolha != 4);
+
+        }
+
+        static void ListagemPessoa()
+        {
+            if (listPessoas.Count() != 0)
+            {
+                foreach (Pessoa pessoa in listPessoas)
+                {
+                    Console.WriteLine(pessoa);
                 }
             }
-
-            Console.Clear();
-
-            switch (escolha)
+            else
             {
-                case 0:
-
-                    Console.WriteLine("Invalido!");
-
-                    break;
-
-                case 1: // cadastro de pessoa
-                    Console.WriteLine("Cadastrando pessoa:");
-                    codigo = util.LerInt("Digite o codigo da pessoa a ser cadastrada: ");
-                    nome = util.LerString("Digite o nome: ");
-                    sobrenome = util.LerString("Digite o sobrenome: ");
-                    dataNascimento = util.LerData("Digite a data de nascimento: "); // retorna o nascimento {dd/mm/aaaa 00:00:00} 
-                    idade = util.CalculaIdade(dataNascimento);
-                    Console.WriteLine($"Idade é de {idade} anos"); // Carregar a data de nascimento e calcular a idade
-                    cpf = util.LerCPF("Digite o CPF: ");
-                    rg = util.LerString("Digite o RG: ");
-                    endereco = util.LerString("Digite o endereço: ");
-                    telefone = util.LerString("Digite o numero do telefone/celular: ");
-
-                    listPessoas.Add(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
-                    OqueFazer();
-
-                    break;
-
-                case 2: // cadastro de empresa
-
-                    Console.WriteLine("Cadastrando empresa:");
-                    codigo = util.LerInt("Digite o codigo da empresa: ");
-                    nome = util.LerString("Digite o nome da empresa: ");
-                    cnpj = util.LerCNPJ("Digite o CNPJ da empresa: ");
-                    endereco = util.LerString("Digite o endereço: ");
-                    telefone = util.LerString("Digite o telefone: ");
-
-                    listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
-                    OqueFazer();
-
-                    break;
-
-                case 3: // cadastro de user
-                    Console.WriteLine("Cadastrando Usuario:");
-                    codigo = util.LerInt("Digite o codigo do usuario: ");
-                    user = util.LerString("Digite o nome de usuario: ");
-                    senha = util.LerString("Digite a senha: ");
-
-                    listUser.Add(new User(codigo, user, senha));
-                    OqueFazer();
-
-                    break;
-
+                Console.WriteLine("Lista vazia!");
             }
         }
 
-        static void MenuBusca()
+        static void ListagemEmpresa()
         {
-            util.LimpConsl();
-            bool parar = false;
-
-            while (parar == false)
+            if (listEmpresa.Count() != 0)
             {
-                Console.WriteLine("_________________________");
-                Console.WriteLine("Qual Busca deseja acessar? " +
-                                "\n  -> 1 - Busca de Pessoas "  +
-                                "\n  -> 2 - Busca de Empresas " +
-                                "\n  -> 3 - Busca de Usuarios " +
-                                "\n  -> 4 - Voltar ");
-                Console.WriteLine("_________________________");
-                
-                int escolha;
+                foreach (Empresa empresa in listEmpresa)
+                {
+                    Console.WriteLine(empresa);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Lista vazia!");
+            }
+        }
+
+        static void ListagemUsuario()
+        {
+            if (listUser.Count() != 0)
+            {
+                foreach (User user in listUser)
+                {
+                    Console.WriteLine(user);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Lista vazia!");
+            }
+        }
+
+        static void Busca()
+        {
+            int escolha = 4;
+            do
+            {
+                escolha = util.LerOpcaoTipo("Busca");
+
+                switch (escolha)
+                {
+                    case 1:
+                        util.LimpConsl();
+                        BuscarPessoa();
+                        break;
+
+                    case 2:
+                        util.LimpConsl();
+                        BuscarEmpresa();
+                        break;
+
+                    case 3:
+
+                        util.LimpConsl();
+                        BuscarUsuario();
+                        break;
+
+                    case 4:
+                        Console.WriteLine("VOLTANDO...");
+                        System.Threading.Thread.Sleep(1000);
+                        util.LimpConsl();
+                        break;
+
+                    default:
+                        Console.WriteLine("Opção invalida!");
+                        break;
+                }
+            } while (escolha != 4);
+        }
+
+        static void BuscarPessoa()
+        {
+            int escolha = 6;
+            do
+            {
+                Console.WriteLine("__________________________");
+                Console.WriteLine("\nEscolha os filtros: ");
+                Console.WriteLine("__________________________");
+                Console.WriteLine("\n -> 1 - Codigo "
+                                  + "\n -> 2 - Nome "
+                                  + "\n -> 3 - Sobrenome "
+                                  + "\n -> 4 - Telefone "
+                                  + "\n -> 5 - CPF "
+                                  + "\n -> 6 - VOLTAR \n");
 
                 int.TryParse(Console.ReadLine(), out escolha);
 
                 switch (escolha)
                 {
+                    //codigo
                     case 1:
-                        BuscarPessoa();
-                        break; 
-                    
-                    case 2:
-                        BuscarEmpresa();
-                        break;
+                        int cod = util.LerInt("Digite o Codigo: ");
 
-                    case 3:
-                        BuscarUsuario();
-                        break;
-                }
-            }
-        }
+                        pessoa = listPessoas.Find(p => p.Codigo == cod);
 
-        static void Listagem()
-        {
-            util.LimpConsl();
-
-            Console.WriteLine("_________________________");
-            Console.WriteLine("Qual listagem deseja acessar? " +
-                            "\n  -> 1 - Lista de Pessoas " +
-                            "\n  -> 2 - Lista de Empresas " +
-                            "\n  -> 3 - Lista de Usuarios " +
-                            "\n  -> 4 - Voltar ");
-            Console.WriteLine("_________________________");
-
-            int escolha;
-
-            int.TryParse(Console.ReadLine(), out escolha);
-
-            switch (escolha)
-            {
-                case 1: // pessoa
-
-                    foreach (Pessoa pessoa in listPessoas)
-                    {
                         if (pessoa != null)
                         {
-                            Console.WriteLine(pessoa);
+                            Console.WriteLine(pessoa.ToString());
                         }
                         else
                         {
-                            Console.WriteLine("Lista vazia!");
+                            Console.WriteLine($"-> {cod} <- não encontrado!");
                         }
-                    }
-                    break;
+                        break;
+                    //nome
+                    case 2:
+                        string nome = util.LerString("Digite o Nome: ");
 
-                case 2: // empresa
+                        pessoa = listPessoas.Find(p => p.Nome == nome);
 
-                    foreach (Pessoa empresa in listEmpresa)
-                    {
-                        if (empresa != null)
+                        if (pessoa != null)
                         {
-                            Console.WriteLine(listEmpresa);
+                            Console.WriteLine(pessoa.ToString());
                         }
                         else
                         {
-                            Console.WriteLine("Lista vazia!");
+                            Console.WriteLine($"-> {nome} <- não encontrado!");
                         }
-                    }
-                    break;
+                        break;
+                    //sobrenome
+                    case 3:
+                        string sobrenome = util.LerString("Digite o Sobrenome: ");
 
-                case 3:  // usuario
+                        pessoa = listPessoas.Find(p => p.Sobrenome == sobrenome);
 
-                    foreach (Pessoa usuario in listUser)
-                    {
-                        if (usuario != null)
+                        if (pessoa != null)
                         {
-                            Console.WriteLine(usuario);
+                            Console.WriteLine(pessoa.ToString());
                         }
                         else
                         {
-                            Console.WriteLine("Lista vazia!");
+                            Console.WriteLine($"-> {sobrenome} <- não encontrado!");
                         }
-                    }
-                    break;
-            }
-        }
+                        break;
+                    //telefone
+                    case 4:
+                        string telefone = util.LerString("Digite o Telefone: ");
 
-        
-        //static void Remover()
-        //{
-        //    switch (escolha)
-        //    {
-        //        case 1: // pessoa
+                        pessoa = listPessoas.Find(p => p.Telefone == telefone);
 
+                        if (pessoa != null)
+                        {
+                            Console.WriteLine(pessoa.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {telefone} <- não encontrado!");
+                        }
+                        break;
+                    //CPF
+                    case 5:
+                        string cpf = util.LerCPF("Digite o CPF: ");
 
-        //            break;
+                        pessoa = listPessoas.Find(p => p.CPF == cpf);
 
-        //        case 2: // empresa
+                        if (pessoa != null)
+                        {
+                            Console.WriteLine(pessoa.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {cpf} <- não encontrado!");
+                        }
+                        break;
+                    //Sair
+                    case 6:
+                        Console.WriteLine("VOLTANDO...");
+                        System.Threading.Thread.Sleep(1000);
+                        util.LimpConsl();
+                        break;
 
-
-        //            break;
-
-        //        case 3:  // usuario
-
-
-        //            break;
-        //    }
-        //}
-
-        static void BuscarPessoa()
-        {
-            Console.Clear();
-
-            while (true)
-            {
-                Console.WriteLine("__________________________");
-                Console.WriteLine("\nEscolha um dos filtros: ");
-                Console.WriteLine("__________________________");
-                Console.WriteLine(  "\n -> 1 - Codigo " 
-                                  + "\n -> 2 - Nome " 
-                                  + "\n -> 3 - Sobrenome " 
-                                  + "\n -> 4 - Telefone " 
-                                  + "\n -> 5 - CPF " 
-                                  + "\n -> 6 - VOLTAR \n");
-
-                int.TryParse(Console.ReadLine(), out int escolha);
-
-                if (escolha != 0)
-                {
-                    switch (escolha)
-                    {
-                        case 1:
-                            int cod = util.LerInt("Digite o Codigo: ");
-
-                            if (listPessoas.Find(p => p.Codigo == cod) != null)
-                            {
-                                Console.WriteLine(listPessoas.Find(p => p.Codigo == cod));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
-                            }
-                            break;
-                        
-                        case 2:
-                            string nome = util.LerString("Digite o Nome: ");
-
-                            if (listPessoas.Find(p => p.Nome == nome) != null)
-                            {
-                                Console.WriteLine(listPessoas.Find(p => p.Nome == nome));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {nome}  <- Não foi encontrado!");
-                            }
-                            break;
-                        
-                        case 3:
-                            string sobrenome = util.LerString("Digite o Sobrenome: ");
-
-                            if(listPessoas.Find(p => p.Sobrenome == sobrenome) != null)
-                            {
-                                Console.WriteLine(listPessoas.Find(p => p.Sobrenome == sobrenome));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {sobrenome}  <- Não foi encontrado!");
-                            }
-                            break;
-
-                        case 4:
-                            string telefone = util.LerString("Digite o Telefone: ");
-
-                            if (listPessoas.Find(p => p.Telefone == telefone) != null)
-                            {
-                                Console.WriteLine(listPessoas.Find(p => p.Telefone == telefone));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {telefone}  <- Não foi encontrado!");
-                            }
-                            break;
-
-                        case 5:
-                            string cpf = util.LerCPF("Digite o CPF: ");
-
-                            if(listPessoas.Find(p => p.CPF == cpf) != null)
-                            {
-                                Console.WriteLine(listPessoas.Find(p => p.CPF == cpf));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {cpf}  <- Não foi encontrado!");
-                            }
-                            break;
-
-                        case 6:
-                            Console.WriteLine("VOLTANDO");
-                            System.Threading.Thread.Sleep(1000);
-                            OqueFazer();
-                            break;
-                    }
+                    default:
+                        Console.WriteLine("Opção invalida!!");
+                        break;
                 }
-            }
-            
+            } while (escolha == 6);
         }
 
         static void BuscarEmpresa()
         {
-            Console.Clear();
-
-            while (true)
-            {
-                Console.WriteLine("__________________________");
-                Console.WriteLine("\nEscolha um dos filtros: ");
-                Console.WriteLine("__________________________");
-                Console.WriteLine(  "\n -> 1 - Codigo " 
-                                  + "\n -> 2 - Nome " 
-                                  + "\n -> 3 - Telefone " 
-                                  + "\n -> 4 - CNPJ " 
-                                  + "\n -> 5 - VOLTAR \n");
-
-                int.TryParse(Console.ReadLine(), out int escolha);
-
-                if (escolha != 0)
-                {
-                    switch (escolha)
-                    {
-                        case 1:
-                            int cod = util.LerInt("Digite o Codigo: ");
-
-                            if (listEmpresa.Find(p => p.Codigo == cod) != null)
-                            {
-                                Console.WriteLine(listEmpresa.Find(p => p.Codigo == cod));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
-                            }
-                            break;
-                        
-                        case 2:
-                            string nome = util.LerString("Digite o Nome: ");
-
-                            if (listEmpresa.Find(p => p.Nome == nome) != null)
-                            {
-                                Console.WriteLine(listEmpresa.Find(p => p.Nome == nome));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {nome}  <- Não foi encontrado!");
-                            }
-                            break;
-                        
-                        case 3:
-                            string telefone = util.LerString("Digite o Telefone: ");
-
-                            if (listEmpresa.Find(p => p.Telefone == telefone) != null)
-                            {
-                                Console.WriteLine(listEmpresa.Find(p => p.Telefone == telefone));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {telefone}  <- Não foi encontrado!");
-                            }
-                            break;
-
-                        case 4:
-                            string cnpj = util.LerCPF("Digite o CNPJ: ");
-
-                            if(listEmpresa.Find(p => p.CNPJ == cnpj) != null)
-                            {
-                                Console.WriteLine(listEmpresa.Find(p => p.CNPJ == cnpj));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {cnpj}  <- Não foi encontrado!");
-                            }
-                            break;
-
-                        case 5:
-                            Console.WriteLine("VOLTANDO");
-                            System.Threading.Thread.Sleep(1000);
-                            OqueFazer();
-                            break;
-                    }
-                }
-            }
-            
-        }
-
-        static void BuscarUsuario()
-        {
-            Console.Clear();
-
-            while (true)
+            int escolha = 5;
+            do
             {
                 Console.WriteLine("__________________________");
                 Console.WriteLine("\nEscolha um dos filtros: ");
                 Console.WriteLine("__________________________");
                 Console.WriteLine("\n -> 1 - Codigo "
+                                  + "\n -> 2 - Nome "
+                                  + "\n -> 3 - Telefone "
+                                  + "\n -> 4 - CNPJ "
+                                  + "\n -> 5 - VOLTAR \n");
+
+                int.TryParse(Console.ReadLine(), out escolha);
+
+                switch (escolha)
+                {
+                    //Cod
+                    case 1:
+                        int cod = util.LerInt("Digite o Codigo: ");
+
+                        empresa = listEmpresa.Find(p => p.Codigo == cod);
+
+                        if (empresa != null)
+                        {
+                            Console.WriteLine(empresa.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {cod} <- não encontrado!");
+                        }
+                        break;
+                    //Nome
+                    case 2:
+                        string nome = util.LerString("Digite o Nome: ");
+
+                        empresa = listEmpresa.Find(p => p.Nome == nome);
+
+                        if (empresa != null)
+                        {
+                            Console.WriteLine(empresa.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {nome} <- não encontrado!");
+                        }
+                        break;
+                    //Telefone
+                    case 3:
+                        string telefone = util.LerString("Digite o Telefone: ");
+
+                        empresa = listEmpresa.Find(p => p.Telefone == telefone);
+
+                        if (empresa != null)
+                        {
+                            Console.WriteLine(empresa.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {telefone} <- não encontrado!");
+                        }
+
+                        break;
+                    //CNPJ
+                    case 4:
+                        string cnpj = util.LerCPF("Digite o CNPJ: ");
+
+                        empresa = listEmpresa.Find(p => p.CNPJ == cnpj);
+
+                        if (empresa != null)
+                        {
+                            Console.WriteLine(empresa.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {cnpj} <- não encontrado!");
+                        }
+                        break;
+                    //Sair
+                    case 5:
+                        Console.WriteLine("VOLTANDO");
+                        System.Threading.Thread.Sleep(1000);
+                        break;
+                    default:
+                        Console.WriteLine("Opcao Invalida!");
+                        break;
+                }
+
+            } while (escolha != 5);
+        }
+
+        static void BuscarUsuario()
+        {
+            int escolha = 3;
+            do
+            {
+                Console.WriteLine("__________________________");
+                Console.WriteLine("Escolha um dos filtros:");
+                Console.WriteLine("__________________________");
+                Console.WriteLine("\n -> 1 - Codigo "
                                   + "\n -> 2 - User "
                                   + "\n -> 3 - VOLTAR \n");
 
-                int.TryParse(Console.ReadLine(), out int escolha);
+                int.TryParse(Console.ReadLine(), out escolha);
 
-                if (escolha != 0)
+                switch (escolha)
                 {
-                    switch (escolha)
-                    {
-                        case 1:
-                            int cod = util.LerInt("Digite o Codigo: ");
+                    //cod
+                    case 1:
+                        int cod = util.LerInt("Digite o Codigo: ");
 
-                            if (listUser.Find(p => p.Codigo == cod) != null)
-                            {
-                                Console.WriteLine(listUser.Find(p => p.Codigo == cod));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
-                            }
-                            break;
+                        user = listUser.Find(p => p.Codigo == cod);
 
-                        case 2:
-                            string nome = util.LerString("Digite o Nome: ");
+                        if (user != null)
+                        {
+                            Console.WriteLine(user.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {cod} <- não encontrado!");
+                        }
+                        break;
+                    //nome
+                    case 2:
+                        string nome = util.LerString("Digite o Nome: ");
 
-                            if (listUser.Find(p => p.Nome == nome) != null)
-                            {
-                                Console.WriteLine(listUser.Find(p => p.Nome == nome));
-                            }
-                            else
-                            {
-                                Console.WriteLine($"->  {nome}  <- Não foi encontrado!");
-                            }
-                            break;
+                        user = listUser.Find(p => p.Nome == nome);
 
-                        case 3:
-                            Console.WriteLine("VOLTANDO");
-                            System.Threading.Thread.Sleep(1000);
-                            OqueFazer();
-                            break;
-                    }
+                        if (user != null)
+                        {
+                            Console.WriteLine(user.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine($"-> {nome} <- não encontrado!");
+                        }
+                        break;
+                    //sair
+                    case 3:
+                        Console.WriteLine("VOLTANDO");
+                        System.Threading.Thread.Sleep(1000);
+                        util.LimpConsl();
+                        break;
+                    default:
+                        Console.WriteLine("Opção Invalida!");
+                        break;
                 }
-            }
-
-
-
-
+            } while (escolha != 3);
         }
 
+        static void Remove()
+        {
+            int escolha = util.LerOpcaoTipo("Remover");
+            do
+            {
+                switch (escolha)
+                {
+                    //pessoa
+                    case 1:
+                        util.LimpConsl();
+                        RemovePessoa();
+                        break;
 
+                    //empresa
+                    case 2:
+                        util.LimpConsl();
+                        RemoveEmpresa();
+                        break;
 
+                    //usuario
+                    case 3:
+                        util.LimpConsl();
+                        RemoveUsuario();
+                        break;
 
+                    //sair
+                    case 4:
+                        Console.WriteLine("VOLTANDO ...");
+                        System.Threading.Thread.Sleep(1000);
+                        util.LimpConsl();
+                        break;
 
+                    default:
+                        Console.WriteLine("Opção Invalida!");
+                        break;
+                }
 
+            } while (escolha != 4);
+        }
+
+        static void RemovePessoa()
+        {
+            ListagemPessoa();
+            int cod = util.LerInt("Digite o Codigo: ");
+            pessoa = listPessoas.Find(p => p.Codigo == cod);
+            
+            if (pessoa != null)
+            {
+                Console.WriteLine(pessoa);
+                string resposta = util.LerString("Deseja deletar?  -> sim / nao <- ");
+                if (resposta == "sim")
+                {
+                    listPessoas.Remove(pessoa);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
+            }
+
+            util.LimpConsl();
+            ListagemPessoa();
+        }
+
+        static void RemoveEmpresa()
+        {
+            ListagemEmpresa();
+            int cod = util.LerInt("Digite o Codigo: ");
+            empresa = listEmpresa.Find(p => p.Codigo == cod);
+
+            if(empresa != null)
+            {
+                Console.WriteLine(empresa);
+                string resposta = util.LerString("Deseja deletar?  -> sim / nao <- ");
+                if (resposta == "sim")
+                {
+                    listPessoas.Remove(pessoa);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
+            }
+            util.LimpConsl();
+            ListagemEmpresa();
+        }
+
+        static void RemoveUsuario()
+        {
+            ListagemUsuario();
+            int cod = util.LerInt("Digite o Codigo: ");
+            user = listUser.Find(p => p.Codigo == cod);
+
+            if (user != null)
+            {
+                Console.WriteLine(user);
+                string resposta = util.LerString("Deseja deletar?  -> sim / nao <- ");
+                if (resposta == "sim")
+                {
+                    listUser.Remove(user);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
+            }
+            util.LimpConsl();
+            ListagemEmpresa();
+        }
 
         static void Main(string[] args)
         {
-
-            OqueFazer();
-
-           // Console.WriteLine(listPessoas.Find(p => p.Codigo == 1));
-
-            //Cadastrar(MenuCadastrar());
-
-            //LerCadastro(MenuLeitura());
-
-            //// pessoa[pessoas.Length + 1]();
-            //armazenaPessoa.Add(davi);
-
-            //int posicaoPessoas = 0;
-            //string[] nome;
-            //string sobrenome;
-
-            //for (int i = 1; i < pessoas.Length + 1; i++)
-            //{
-            //    nome = pessoas[posicaoPessoas].Split(' ');
-
-            //    sobrenome = pessoas[posicaoPessoas].Substring(nome[0].Length, pessoas[posicaoPessoas].Length - nome[0].Length);
-
-            //    Pessoa temp = new Pessoa();
-
-            //    temp.setNome(nome[0]);
-
-            //    temp.setSobrenome(sobrenome);
-
-            //    armazenaPessoa.Add(temp);
-
-            //    posicaoPessoas++;
-            //}
-
-            //foreach (Pessoa pessoa in armazenaPessoa)
-            //{
-            //    Console.WriteLine(pessoa.ToString());
-            //}
+            MenuPrincipal();
 
         }
     }

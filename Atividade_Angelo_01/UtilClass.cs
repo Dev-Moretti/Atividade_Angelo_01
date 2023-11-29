@@ -56,7 +56,7 @@ namespace Atividade_Angelo_01
             {
                 Console.WriteLine($"{pergunta} > AAAA/MM/DD < :");
                 DateTime data = DateTime.Parse(Console.ReadLine());
-                
+
                 DateTime dataNow = DateTime.Now;
 
                 if (data != null && dataNow >= data)
@@ -73,7 +73,7 @@ namespace Atividade_Angelo_01
 
         public string LerCPF(string mensagem)
         {
-             
+
             bool valida = false;
 
             while (true)
@@ -100,13 +100,13 @@ namespace Atividade_Angelo_01
         public string LerCNPJ(string mensagem)
         {
             bool valida = false;
-            
+
             while (true)
             {
                 Console.Write(mensagem);
                 string cnpj = Console.ReadLine();
-                
-                if (!string.IsNullOrEmpty(cnpj) && cnpj.Count() == 14) 
+
+                if (!string.IsNullOrEmpty(cnpj) && cnpj.Count() == 14)
                 {
                     valida = TemCNPJValido(cnpj);
                 }
@@ -138,9 +138,8 @@ namespace Atividade_Angelo_01
                     return idade - 1;
                 }
             }
-               return idade;
+            return idade;
         }
-
 
         public bool TemCPFValido(string cpf)
         {
@@ -194,7 +193,6 @@ namespace Atividade_Angelo_01
                 return false;
             }
         }
-
 
         public bool TemCNPJValido(string cnpj)
         {
@@ -254,7 +252,32 @@ namespace Atividade_Angelo_01
             Console.Clear();
         }
 
+        public int LerOpcaoTipo(string tipo)
+        {
+            while (true)
+            {
+                Console.WriteLine("************************************" +
+                            $"\n Qual opção deseja acessar? " +
+                            $"\n  -> 1 - {tipo} de Pessoas " +
+                            $"\n  -> 2 - {tipo} de Empresas " +
+                            $"\n  -> 3 - {tipo} de Usuarios " +
+                            $"\n  -> 4 - Voltar " +
+                            $"\n************************************");
 
+                bool i = int.TryParse(Console.ReadLine(), out int numeros);
+
+                if (i)
+                {
+                    return numeros;
+                }
+                else
+                {
+                    Console.WriteLine("Valor invalido!");
+                    Console.WriteLine("Apenas Números!");
+                }
+            }
+
+        }
 
     }
 }
