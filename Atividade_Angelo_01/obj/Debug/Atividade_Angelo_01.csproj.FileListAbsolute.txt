@@ -5,3 +5,10 @@ C:\Users\Pichau\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\A
 C:\Users\Pichau\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\Atividade_Angelo_01.csproj.CoreCompileInputs.cache
 C:\Users\Pichau\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\Atividade_Angelo_01.exe
 C:\Users\Pichau\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\Atividade_Angelo_01.pdb
+C:\Users\davia\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\bin\Debug\Atividade_Angelo_01.exe.config
+C:\Users\davia\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\bin\Debug\Atividade_Angelo_01.exe
+C:\Users\davia\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\bin\Debug\Atividade_Angelo_01.pdb
+C:\Users\davia\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\Atividade_Angelo_01.csproj.AssemblyReference.cache
+C:\Users\davia\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\Atividade_Angelo_01.csproj.CoreCompileInputs.cache
+C:\Users\davia\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\Atividade_Angelo_01.exe
+C:\Users\davia\source\repos\Atividade_Angelo_01\Atividade_Angelo_01\obj\Debug\Atividade_Angelo_01.pdb

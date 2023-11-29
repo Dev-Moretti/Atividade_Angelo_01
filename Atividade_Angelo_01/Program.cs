@@ -215,9 +215,18 @@ namespace Atividade_Angelo_01
         static void Listagem()
         {
             util.LimpConsl();
-            
-            int escolha = 
 
+            Console.WriteLine("_________________________");
+            Console.WriteLine("Qual listagem deseja acessar? " +
+                            "\n  -> 1 - Lista de Pessoas " +
+                            "\n  -> 2 - Lista de Empresas " +
+                            "\n  -> 3 - Lista de Usuarios " +
+                            "\n  -> 4 - Voltar ");
+            Console.WriteLine("_________________________");
+
+            int escolha;
+
+            int.TryParse(Console.ReadLine(), out escolha);
 
             switch (escolha)
             {
@@ -225,20 +234,45 @@ namespace Atividade_Angelo_01
 
                     foreach (Pessoa pessoa in listPessoas)
                     {
-                        
+                        if (pessoa != null)
+                        {
+                            Console.WriteLine(pessoa);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Lista vazia!");
+                        }
                     }
-
-
                     break;
 
                 case 2: // empresa
 
-
+                    foreach (Pessoa empresa in listEmpresa)
+                    {
+                        if (empresa != null)
+                        {
+                            Console.WriteLine(listEmpresa);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Lista vazia!");
+                        }
+                    }
                     break;
 
                 case 3:  // usuario
 
-
+                    foreach (Pessoa usuario in listUser)
+                    {
+                        if (usuario != null)
+                        {
+                            Console.WriteLine(usuario);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Lista vazia!");
+                        }
+                    }
                     break;
             }
         }
