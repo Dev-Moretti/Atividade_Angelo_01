@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Atividade_Angelo_01
 {
@@ -54,7 +55,7 @@ namespace Atividade_Angelo_01
         {
             while (true)
             {
-                Console.WriteLine($"{pergunta} > AAAA/MM/DD < :");
+                Console.WriteLine($"{pergunta} > DD/MM/AAAA < :");
                 DateTime data = DateTime.Parse(Console.ReadLine());
 
                 DateTime dataNow = DateTime.Now;
