@@ -50,6 +50,10 @@ namespace Atividade_Angelo_01
                    $"\n____________________________";
         }
 
+        public string ToFileUser()
+        {
+            return $"{Codigo},{NomeUser},{SenhaUser}";
+        }
 
     }
 }

@@ -60,11 +60,17 @@ namespace Atividade_Angelo_01
             return $"\n____________________________" +
                    $"\n Codigo: {this.Codigo}" +
                    $"\n Nome: {this.Nome} {this.Sobrenome}" +
+                   $"\n Data Nascimento: {this.DataNascimento.ToString("dd/MM/yyyy")} " +
                    $"\n Idade: {this.Idade} ano(s)" +
                    $"\n CPF: {this.CPF}" +
                    $"\n Telefone: {this.Telefone}" +
                    $"\n Endereço: {this.Endereco}" +
                    $"\n____________________________";
+        }
+
+        public string ToFilePessoa()
+        {
+            return $"{Codigo},{Nome},{Sobrenome},{DataNascimento.ToString("dd/MM/yyyy")},{Idade},{CPF},{RG},{Telefone},{Endereco}";
         }
 
     }

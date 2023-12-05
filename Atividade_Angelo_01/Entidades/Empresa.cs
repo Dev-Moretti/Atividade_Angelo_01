@@ -33,6 +33,10 @@ namespace Atividade_Angelo_01
                    $"\n____________________________";
         }
 
+        public string ToFileEmpresa()
+        {
+            return $"{Codigo},{Nome},{CNPJ},{Telefone},{Endereco}";
+        }
 
     }
 }

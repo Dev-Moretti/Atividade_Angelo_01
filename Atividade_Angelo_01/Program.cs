@@ -24,7 +24,7 @@ namespace Atividade_Angelo_01
         static Pessoa pessoa = new Pessoa();
         static Empresa empresa = new Empresa();
         static User user = new User();
-        static DaoPessoa DPessoa = new DaoPessoa();
+        static DaoPessoa SPessoa = new DaoPessoa();
 
 
         static void MenuPrincipal()
@@ -143,9 +143,6 @@ namespace Atividade_Angelo_01
 
         static void CadastroPessoa()
         {
-            DPessoa.GetPessoa();
-
-
             Console.WriteLine("Cadastrando pessoa:");
             int codigo = util.LerInt("Digite o codigo da pessoa a ser cadastrada: ");
             string nome = util.LerString("Digite o nome: ");
@@ -158,9 +155,7 @@ namespace Atividade_Angelo_01
             string endereco = util.LerString("Digite o endereço: ");
             string telefone = util.LerString("Digite o numero do telefone/celular: ");
 
-            listPessoas.Add(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
-
-            DPessoa.SetPessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone);
+            SPessoa.SetPessoa(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
         }
 
         static void CadastroEmpresa()
@@ -172,17 +167,21 @@ namespace Atividade_Angelo_01
             string endereco = util.LerString("Digite o endereço: ");
             string telefone = util.LerString("Digite o telefone: ");
 
-            listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
+            //listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
+
+            SPessoa.SetEmpresa(empresa);
         }
 
         static void CadastroUser()
         {
             Console.WriteLine("Cadastrando Usuario:");
             int codigo = util.LerInt("Digite o codigo do usuario: ");
-            string user = util.LerString("Digite o nome de usuario: ");
+            string usuario = util.LerString("Digite o nome de usuario: ");
             string senha = util.LerString("Digite a senha: ");
 
-            listUser.Add(new User(codigo, user, senha));
+            //listUser.Add(new User(codigo, usuario, senha));
+
+            SPessoa.SetUser(user);
         }
 
         static void Listagem()
@@ -191,7 +190,6 @@ namespace Atividade_Angelo_01
 
             do
             {
-
                 escolha = util.LerOpcaoTipo("Listagem");
 
                 switch (escolha)
@@ -233,6 +231,8 @@ namespace Atividade_Angelo_01
 
         static void ListagemPessoa()
         {
+            listPessoas = SPessoa.GetPessoa();
+
             if (listPessoas.Count() != 0)
             {
                 foreach (Pessoa pessoa in listPessoas)
@@ -248,6 +248,8 @@ namespace Atividade_Angelo_01
 
         static void ListagemEmpresa()
         {
+            listEmpresa = SPessoa.GetEmpresa();
+
             if (listEmpresa.Count() != 0)
             {
                 foreach (Empresa empresa in listEmpresa)
@@ -263,6 +265,8 @@ namespace Atividade_Angelo_01
 
         static void ListagemUsuario()
         {
+            listUser = SPessoa.GetUser();
+
             if (listUser.Count() != 0)
             {
                 foreach (User user in listUser)
@@ -330,6 +334,8 @@ namespace Atividade_Angelo_01
                                   + "\n -> 6 - VOLTAR \n");
 
                 int.TryParse(Console.ReadLine(), out escolha);
+
+                listPessoas = SPessoa.GetPessoa();
 
                 switch (escolha)
                 {
@@ -438,6 +444,8 @@ namespace Atividade_Angelo_01
 
                 int.TryParse(Console.ReadLine(), out escolha);
 
+                listEmpresa = SPessoa.GetEmpresa();
+
                 switch (escolha)
                 {
                     //Cod
@@ -528,6 +536,8 @@ namespace Atividade_Angelo_01
 
                 int.TryParse(Console.ReadLine(), out escolha);
 
+                listUser = SPessoa.GetUser();
+
                 switch (escolha)
                 {
                     //cod
@@ -617,18 +627,15 @@ namespace Atividade_Angelo_01
 
         static void RemovePessoa()
         {
+            listPessoas = SPessoa.GetPessoa();
+
             ListagemPessoa();
             int cod = util.LerInt("Digite o Codigo: ");
-            pessoa = listPessoas.Find(p => p.Codigo == cod);
-
-            if (pessoa != null)
+;
+            if (listPessoas.Remove(listPessoas.Find(p => p.Codigo == cod)))
             {
-                Console.WriteLine(pessoa);
-                string resposta = util.LerString("Deseja deletar?  -> sim / nao <- ");
-                if (resposta == "sim")
-                {
-                    listPessoas.Remove(pessoa);
-                }
+                Console.WriteLine("Removido com sucesso!");
+
             }
             else
             {
@@ -641,6 +648,8 @@ namespace Atividade_Angelo_01
 
         static void RemoveEmpresa()
         {
+            listEmpresa = SPessoa.GetEmpresa();
+
             ListagemEmpresa();
             int cod = util.LerInt("Digite o Codigo: ");
             empresa = listEmpresa.Find(p => p.Codigo == cod);
@@ -664,6 +673,8 @@ namespace Atividade_Angelo_01
 
         static void RemoveUsuario()
         {
+            listUser = SPessoa.GetUser();
+
             ListagemUsuario();
             int cod = util.LerInt("Digite o Codigo: ");
             user = listUser.Find(p => p.Codigo == cod);
