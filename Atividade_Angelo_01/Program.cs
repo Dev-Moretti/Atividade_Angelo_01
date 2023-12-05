@@ -5,10 +5,12 @@ using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using Atividade_Angelo_01.Dao;
 
 namespace Atividade_Angelo_01
 {
@@ -22,7 +24,7 @@ namespace Atividade_Angelo_01
         static Pessoa pessoa = new Pessoa();
         static Empresa empresa = new Empresa();
         static User user = new User();
-
+        static SalvarPessoa SalvarPessoa = new SalvarPessoa();
 
 
         static void MenuPrincipal()
@@ -154,6 +156,8 @@ namespace Atividade_Angelo_01
             string telefone = util.LerString("Digite o numero do telefone/celular: ");
 
             listPessoas.Add(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
+
+            SalvarPessoa.SetPessoa(listPessoas);
         }
 
         static void CadastroEmpresa()
@@ -680,6 +684,7 @@ namespace Atividade_Angelo_01
 
         static void Main(string[] args)
         {
+
             MenuPrincipal();
         }
     }
