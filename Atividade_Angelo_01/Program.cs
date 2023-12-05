@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Atividade_Angelo_01.Dao;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Atividade_Angelo_01
         static Pessoa pessoa = new Pessoa();
         static Empresa empresa = new Empresa();
         static User user = new User();
-
+        static DaoPessoa DPessoa = new DaoPessoa();
 
 
         static void MenuPrincipal()
@@ -141,6 +143,9 @@ namespace Atividade_Angelo_01
 
         static void CadastroPessoa()
         {
+            DPessoa.GetPessoa();
+
+
             Console.WriteLine("Cadastrando pessoa:");
             int codigo = util.LerInt("Digite o codigo da pessoa a ser cadastrada: ");
             string nome = util.LerString("Digite o nome: ");
@@ -154,6 +159,8 @@ namespace Atividade_Angelo_01
             string telefone = util.LerString("Digite o numero do telefone/celular: ");
 
             listPessoas.Add(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
+
+            DPessoa.SetPessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone);
         }
 
         static void CadastroEmpresa()
@@ -680,6 +687,7 @@ namespace Atividade_Angelo_01
 
         static void Main(string[] args)
         {
+
             MenuPrincipal();
         }
     }
