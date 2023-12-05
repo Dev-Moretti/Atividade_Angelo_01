@@ -43,8 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dao\GetPessoa.cs" />
-    <Compile Include="Dao\SalvarPessoa.cs" />
+    <Compile Include="Dao\DaoPessoa.cs" />
     <Compile Include="Entidades\Empresa.cs" />
     <Compile Include="Entidades\Pessoa.cs" />
     <Compile Include="Program.cs" />
