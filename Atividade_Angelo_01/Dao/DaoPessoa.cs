@@ -143,6 +143,7 @@ namespace Atividade_Angelo_01.Dao
             }
             return false;
         }
+
         public bool RemoveEmpresa(int cod)
         {
             List<Empresa> listEmpresa = GetEmpresa();
@@ -163,6 +164,7 @@ namespace Atividade_Angelo_01.Dao
             }
             return false;
         }
+
         public bool RemoveUser(int cod)
         {
             List<User> listUser = GetUser();
@@ -182,11 +184,5 @@ namespace Atividade_Angelo_01.Dao
             }
             return false;
         }
-    
-
-    
-    
     }
-
-
 }

@@ -28,7 +28,6 @@ namespace Atividade_Angelo_01
         static User user = new User();
         static DaoPessoa SPessoa = new DaoPessoa();
 
-
         static void MenuPrincipal()
         {
             util.LimpConsl();
@@ -662,9 +661,6 @@ namespace Atividade_Angelo_01
             } while (escolha != 4);
         }
 
-
-
-       
         static void Main(string[] args)
         {
             MenuPrincipal();
