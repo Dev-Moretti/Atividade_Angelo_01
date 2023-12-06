@@ -16,6 +16,8 @@ namespace Atividade_Angelo_01
 {
     internal class Program
     {
+        public Program() { }
+
         static List<Pessoa> listPessoas = new List<Pessoa>();
         static List<Empresa> listEmpresa = new List<Empresa>();
         static List<User> listUser = new List<User>();
@@ -170,7 +172,7 @@ namespace Atividade_Angelo_01
 
             //listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
 
-            SPessoa.SetEmpresa(empresa);
+            SPessoa.SetEmpresa(new Empresa(codigo,nome,cnpj,endereco,telefone));
         }
 
         static void CadastroUser()
@@ -182,7 +184,7 @@ namespace Atividade_Angelo_01
 
             //listUser.Add(new User(codigo, usuario, senha));
 
-            SPessoa.SetUser(user);
+            SPessoa.SetUser(new User(codigo,usuario,senha));
         }
 
         static void Listagem()
@@ -195,7 +197,7 @@ namespace Atividade_Angelo_01
 
                 switch (escolha)
                 {
-                    case 1:
+                    case 1: // pessoa
 
                         util.LimpConsl();
                         ListagemPessoa();
@@ -586,6 +588,7 @@ namespace Atividade_Angelo_01
 
         static void Remove()
         {
+            int cod = 0;
             int escolha = 4;
             do
             {
@@ -596,19 +599,52 @@ namespace Atividade_Angelo_01
                     //pessoa
                     case 1:
                         util.LimpConsl();
-                        RemovePessoa();
+                        ListagemPessoa();
+                        cod = util.LerInt("Digite o Codigo: ");
+                        if (SPessoa.RemovePessoa(cod))
+                        {
+                            Console.WriteLine("Removido com sucesso!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Codigo -> {cod} não encontrado!");
+                        }
+                        System.Threading.Thread.Sleep(1500);
+
                         break;
 
                     //empresa
                     case 2:
                         util.LimpConsl();
-                        RemoveEmpresa();
+                        ListagemEmpresa();
+                        cod = util.LerInt("Digite o Codigo: ");
+                        if (SPessoa.RemoveEmpresa(cod))
+                        {
+                            Console.WriteLine("Removido com sucesso!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Codigo -> {cod} não encontrado!");
+                        }
+                        System.Threading.Thread.Sleep(1500);
+
                         break;
 
                     //usuario
                     case 3:
                         util.LimpConsl();
-                        RemoveUsuario();
+                        ListagemUsuario();
+                        cod = util.LerInt("Digite o Codigo: ");
+                        if (SPessoa.RemoveUser(cod))
+                        {
+                            Console.WriteLine("Removido com sucesso!");
+                        }
+                        else 
+                        {
+                            Console.WriteLine($"Codigo -> {cod} não encontrado!");
+                        }
+                        System.Threading.Thread.Sleep(1500);
+
                         break;
 
                     //sair
@@ -626,73 +662,9 @@ namespace Atividade_Angelo_01
             } while (escolha != 4);
         }
 
-        static void RemovePessoa()
-        {
-            listPessoas = SPessoa.GetPessoa();
 
-            ListagemPessoa();
 
-            int cod = util.LerInt("Digite o Codigo: ");
-;
-            if (listPessoas.Remove(listPessoas.Find(p => p.Codigo == cod)))
-            {
-                Console.WriteLine("Removido com sucesso!");
-                System.Threading.Thread.Sleep(1500);
-            }
-            else
-            {
-                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
-            }
-
-            SPessoa.SetRemovePessoa(listPessoas);
-
-            util.LimpConsl();
-        }
-
-        static void RemoveEmpresa()
-        {
-            listEmpresa = SPessoa.GetEmpresa();
-
-            ListagemEmpresa();
-            int cod = util.LerInt("Digite o Codigo: ");
-
-            if (listEmpresa.Remove(listEmpresa.Find(p => p.Codigo == cod)))
-            {
-                Console.WriteLine("Removido com sucesso!");
-                System.Threading.Thread.Sleep(1500);
-            }
-            else
-            {
-                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
-            }
-
-            SPessoa.SetRemoveEmpresa(listEmpresa);
-
-            util.LimpConsl();
-        }
-
-        static void RemoveUsuario()
-        {
-            listUser = SPessoa.GetUser();
-
-            ListagemUsuario();
-            int cod = util.LerInt("Digite o Codigo: ");
-
-            if (listUser.Remove(listUser.Find(p => p.Codigo == cod)))
-            {
-                Console.WriteLine("Removido com sucesso!");
-                System.Threading.Thread.Sleep(1500);
-            }
-            else
-            {
-                Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
-            }
-
-            SPessoa.SetRemoveUser(listUser);
-
-            util.LimpConsl();
-        }
-
+       
         static void Main(string[] args)
         {
             MenuPrincipal();

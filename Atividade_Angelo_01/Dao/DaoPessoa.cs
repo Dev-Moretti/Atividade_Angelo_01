@@ -17,7 +17,6 @@ namespace Atividade_Angelo_01.Dao
         static string pathPessoa = $"{System.Environment.CurrentDirectory.ToString()}" + @"\Pessoas.txt";
         static string pathEmpresa = $"{System.Environment.CurrentDirectory.ToString()}" + @"\Empresas.txt";
         static string pathUser = $"{System.Environment.CurrentDirectory.ToString()}" + @"\User.txt";
-
         public void SetPessoa(Pessoa pessoa)
         {
             List<string> listPessoa = File.ReadAllLines(pathPessoa).ToList();
@@ -124,38 +123,64 @@ namespace Atividade_Angelo_01.Dao
             return listUser;
         }
     
-        public void SetRemovePessoa(List<Pessoa> listPessoa)
+        public bool RemovePessoa(int cod)
         {
-            List<string> temp = new List<string>();
+            List<Pessoa> listPessoas = GetPessoa();
 
-            foreach(Pessoa p in listPessoa)
+            //Remover da lista
+            if (listPessoas.Remove(listPessoas.Find(p => p.Codigo == cod)))
             {
-                temp.Add($"{p.Codigo},{p.Nome},{p.Sobrenome},{p.DataNascimento.ToString("dd/MM/yyyy")},{p.Idade},{p.CPF},{p.RG},{p.Endereco},{p.Telefone},");
-            }
+                List<string> temp = new List<string>();
 
-            File.WriteAllLines(pathPessoa, temp);
+                foreach (Pessoa p in listPessoas)
+                {
+                    temp.Add(p.ToFilePessoa());
+                }
+
+                File.WriteAllLines(pathPessoa, temp);
+
+                return true;
+            }
+            return false;
         }
-        public void SetRemoveEmpresa(List<Empresa> listEmpresa)
+        public bool RemoveEmpresa(int cod)
         {
-            List<string> temp = new List<string>();
+            List<Empresa> listEmpresa = GetEmpresa();
 
-            foreach(Empresa e in listEmpresa)
+            // removendo da lista
+            if (listEmpresa.Remove(listEmpresa.Find(p => p.Codigo == cod)))
             {
-                temp.Add($"{e.Codigo},{e.Nome},{e.CNPJ},{e.Endereco},{e.Telefone},");
-            }
+                List<string> temp = new List<string>();
 
-            File.WriteAllLines(pathEmpresa, temp);
+                foreach (Empresa e in listEmpresa)
+                {
+                    temp.Add($"{e.Codigo},{e.Nome},{e.CNPJ},{e.Endereco},{e.Telefone},");
+                }
+
+                File.WriteAllLines(pathEmpresa, temp);
+
+                return true;
+            }
+            return false;
         }
-        public void SetRemoveUser(List<User> listUser)
+        public bool RemoveUser(int cod)
         {
-            List<string> temp = new List<string>();
+            List<User> listUser = GetUser();
 
-            foreach(User u in listUser)
+            if(listUser.Remove(listUser.Find(p => p.Codigo == cod)))
             {
-                temp.Add($"{u.Codigo},{u.NomeUser},{u.SenhaUser}");
-            }
+                List<string> temp = new List<string>();
 
-            File.WriteAllLines(pathUser, temp);
+                foreach (User u in listUser)
+                {
+                    temp.Add($"{u.Codigo},{u.NomeUser},{u.SenhaUser}");
+                }
+
+                File.WriteAllLines(pathUser, temp);
+
+                return true;
+            }
+            return false;
         }
     
 
