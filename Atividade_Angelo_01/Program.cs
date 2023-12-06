@@ -74,6 +74,7 @@ namespace Atividade_Angelo_01
 
                         util.LimpConsl();
                         Remove();
+                        util.LimpConsl();
 
                         break;
 
@@ -630,20 +631,22 @@ namespace Atividade_Angelo_01
             listPessoas = SPessoa.GetPessoa();
 
             ListagemPessoa();
+
             int cod = util.LerInt("Digite o Codigo: ");
 ;
             if (listPessoas.Remove(listPessoas.Find(p => p.Codigo == cod)))
             {
                 Console.WriteLine("Removido com sucesso!");
-
+                System.Threading.Thread.Sleep(1500);
             }
             else
             {
                 Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
             }
 
+            SPessoa.SetRemovePessoa(listPessoas);
+
             util.LimpConsl();
-            ListagemPessoa();
         }
 
         static void RemoveEmpresa()
@@ -652,23 +655,20 @@ namespace Atividade_Angelo_01
 
             ListagemEmpresa();
             int cod = util.LerInt("Digite o Codigo: ");
-            empresa = listEmpresa.Find(p => p.Codigo == cod);
 
-            if (empresa != null)
+            if (listEmpresa.Remove(listEmpresa.Find(p => p.Codigo == cod)))
             {
-                Console.WriteLine(empresa);
-                string resposta = util.LerString("Deseja deletar?  -> sim / nao <- ");
-                if (resposta == "sim")
-                {
-                    listEmpresa.Remove(empresa);
-                }
+                Console.WriteLine("Removido com sucesso!");
+                System.Threading.Thread.Sleep(1500);
             }
             else
             {
                 Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
             }
+
+            SPessoa.SetRemoveEmpresa(listEmpresa);
+
             util.LimpConsl();
-            ListagemEmpresa();
         }
 
         static void RemoveUsuario()
@@ -677,28 +677,24 @@ namespace Atividade_Angelo_01
 
             ListagemUsuario();
             int cod = util.LerInt("Digite o Codigo: ");
-            user = listUser.Find(p => p.Codigo == cod);
 
-            if (user != null)
+            if (listUser.Remove(listUser.Find(p => p.Codigo == cod)))
             {
-                Console.WriteLine(user);
-                string resposta = util.LerString("Deseja deletar?  -> sim / nao <- ");
-                if (resposta == "sim")
-                {
-                    listUser.Remove(user);
-                }
+                Console.WriteLine("Removido com sucesso!");
+                System.Threading.Thread.Sleep(1500);
             }
             else
             {
                 Console.WriteLine($"->  {cod}  <- Não foi encontrado!");
             }
+
+            SPessoa.SetRemoveUser(listUser);
+
             util.LimpConsl();
-            ListagemEmpresa();
         }
 
         static void Main(string[] args)
         {
-
             MenuPrincipal();
         }
     }
