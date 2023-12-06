@@ -124,18 +124,41 @@ namespace Atividade_Angelo_01.Dao
             return listUser;
         }
     
-        public void SetRemovePessoa(List<Pessoa> pessoa)
+        public void SetRemovePessoa(List<Pessoa> listPessoa)
         {
-            
-            File.WriteAllLines(pathPessoa, pessoa);
+            List<string> temp = new List<string>();
 
+            foreach(Pessoa p in listPessoa)
+            {
+                temp.Add($"{p.Codigo},{p.Nome},{p.Sobrenome},{p.DataNascimento.ToString("dd/MM/yyyy")},{p.Idade},{p.CPF},{p.RG},{p.Endereco},{p.Telefone},");
+            }
 
+            File.WriteAllLines(pathPessoa, temp);
+        }
+        public void SetRemoveEmpresa(List<Empresa> listEmpresa)
+        {
+            List<string> temp = new List<string>();
 
+            foreach(Empresa e in listEmpresa)
+            {
+                temp.Add($"{e.Codigo},{e.Nome},{e.CNPJ},{e.Endereco},{e.Telefone},");
+            }
 
+            File.WriteAllLines(pathEmpresa, temp);
+        }
+        public void SetRemoveUser(List<User> listUser)
+        {
+            List<string> temp = new List<string>();
 
+            foreach(User u in listUser)
+            {
+                temp.Add($"{u.Codigo},{u.NomeUser},{u.SenhaUser}");
+            }
 
+            File.WriteAllLines(pathUser, temp);
         }
     
+
     
     
     }
