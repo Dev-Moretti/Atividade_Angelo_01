@@ -14,115 +14,60 @@ namespace Atividade_Angelo_01.Dao
     {
         public DaoPessoa() { }
 
-        static string pathPessoa = $"{System.Environment.CurrentDirectory.ToString()}" + @"\Pessoas.txt";
-        static string pathEmpresa = $"{System.Environment.CurrentDirectory.ToString()}" + @"\Empresas.txt";
-        static string pathUser = $"{System.Environment.CurrentDirectory.ToString()}" + @"\User.txt";
+        static string pathPessoa = $"{System.Environment.CurrentDirectory.ToString()}" + @"\Pessoas.json";
+        
         public void SetPessoa(Pessoa pessoa)
         {
             List<string> listPessoa = File.ReadAllLines(pathPessoa).ToList();
-            
+
             listPessoa.Add(pessoa.ToFilePessoa());
 
-            File.WriteAllLines(pathPessoa, listPessoa);
-        }
-
-        public void SetEmpresa(Empresa empresa)
-        {
-            List<string> listEmpresa = File.ReadAllLines(pathEmpresa).ToList();
-
-            listEmpresa.Add(empresa.ToFileEmpresa());
-
-            File.WriteAllLines(pathEmpresa, listEmpresa);
-        }
-
-        public void SetUser(User user)
-        {
-            List<string> listUser = File.ReadAllLines(pathUser).ToList();
-
-            listUser.Add(user.ToFileUser());
-
-            File.WriteAllLines(pathUser, listUser);
+            File.WriteAllText(pathPessoa, Newtonsoft.Json.JsonConvert.SerializeObject(listPessoa));
         }
 
         public List<Pessoa> GetPessoa()
         {
-            if(!File.Exists(pathPessoa))
+            // forma melhorada de fazer -- usando Jason -- precisa do Newtonsoft do nuguet
+
+            if (!File.Exists(pathPessoa))
             {
                 File.WriteAllText(pathPessoa, "");
             }
 
-            List<Pessoa> listPessoa = new List<Pessoa>();
+            List<Pessoa> listPessoa = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Pessoa>>(File.ReadAllText(pathPessoa));
 
-            List<string> arq = File.ReadAllLines(pathPessoa).ToList();
-
-            foreach (string line in arq)
-            {
-                string[] dadosPessoa = line.Split(',');
-
-                listPessoa.Add(new Pessoa(
-                    int.Parse(dadosPessoa[0]), 
-                    dadosPessoa[1], 
-                    dadosPessoa[2], 
-                    DateTime.Parse(dadosPessoa[3]), 
-                    int.Parse(dadosPessoa[4]), 
-                    dadosPessoa[5], 
-                    dadosPessoa[6], 
-                    dadosPessoa[7], 
-                    dadosPessoa[8])
-                    );
-            }
             return listPessoa;
+
+
+            // ------ forma que eu fiz "gambiarra" com .txt
+
+            //if (!File.Exists(pathPessoa))
+            //{
+            //File.WriteAllText(pathPessoa, "");
+            //}
+
+            //List<Pessoa> listPessoa = new List<Pessoa>();
+
+            //List<string> arq = File.ReadAllLines(pathPessoa).ToList();
+
+            //foreach (string line in arq)
+            //{
+            //    string[] dadosPessoa = line.Split(',');
+
+            //    listPessoa.Add(new Pessoa(
+            //        int.Parse(dadosPessoa[0]), 
+            //        dadosPessoa[1], 
+            //        dadosPessoa[2], 
+            //        DateTime.Parse(dadosPessoa[3]), 
+            //        int.Parse(dadosPessoa[4]), 
+            //        dadosPessoa[5], 
+            //        dadosPessoa[6], 
+            //        dadosPessoa[7], 
+            //        dadosPessoa[8])
+            //        );
+            //}
         }
 
-        public List<Empresa> GetEmpresa()
-        {
-            if (!File.Exists(pathEmpresa))
-            {
-                File.WriteAllText(pathEmpresa, "");
-            }
-
-            List<Empresa> listEmpresa = new List<Empresa>();
-
-            List<string> arq = File.ReadAllLines(pathPessoa).ToList();
-
-            foreach (string line in arq)
-            {
-                string[] dadosEmpresa = line.Split(',');
-
-                listEmpresa.Add(new Empresa(
-                    int.Parse(dadosEmpresa[0]),
-                    dadosEmpresa[1],
-                    dadosEmpresa[2],
-                    dadosEmpresa[3],
-                    dadosEmpresa[4])
-                    );
-            }
-            return listEmpresa;
-        }
-
-        public List<User> GetUser() 
-        {
-            if (!File.Exists(pathUser))
-            {
-                File.WriteAllText(pathUser, "");
-            }
-
-            List<User> listUser = new List<User>();
-
-            List<string> arq = File.ReadAllLines(pathPessoa).ToList();
-
-            foreach(string line in arq)
-            {
-                string[] dadosUser = line.Split(',');
-                listUser.Add(new User(
-                    int.Parse(dadosUser[0]),
-                    dadosUser[1],
-                    dadosUser[2])
-                    );
-            }
-            return listUser;
-        }
-    
         public bool RemovePessoa(int cod)
         {
             List<Pessoa> listPessoas = GetPessoa();
@@ -137,52 +82,13 @@ namespace Atividade_Angelo_01.Dao
                     temp.Add(p.ToFilePessoa());
                 }
 
-                File.WriteAllLines(pathPessoa, temp);
+                File.WriteAllText(pathPessoa, Newtonsoft.Json.JsonConvert.SerializeObject(temp));
 
                 return true;
             }
             return false;
         }
 
-        public bool RemoveEmpresa(int cod)
-        {
-            List<Empresa> listEmpresa = GetEmpresa();
 
-            // removendo da lista
-            if (listEmpresa.Remove(listEmpresa.Find(p => p.Codigo == cod)))
-            {
-                List<string> temp = new List<string>();
-
-                foreach (Empresa e in listEmpresa)
-                {
-                    temp.Add($"{e.Codigo},{e.Nome},{e.CNPJ},{e.Endereco},{e.Telefone},");
-                }
-
-                File.WriteAllLines(pathEmpresa, temp);
-
-                return true;
-            }
-            return false;
-        }
-
-        public bool RemoveUser(int cod)
-        {
-            List<User> listUser = GetUser();
-
-            if(listUser.Remove(listUser.Find(p => p.Codigo == cod)))
-            {
-                List<string> temp = new List<string>();
-
-                foreach (User u in listUser)
-                {
-                    temp.Add($"{u.Codigo},{u.NomeUser},{u.SenhaUser}");
-                }
-
-                File.WriteAllLines(pathUser, temp);
-
-                return true;
-            }
-            return false;
-        }
     }
 }

@@ -25,8 +25,11 @@ namespace Atividade_Angelo_01
         static UtilClass util = new UtilClass();
         static Pessoa pessoa = new Pessoa();
         static Empresa empresa = new Empresa();
+
         static User user = new User();
-        static DaoPessoa SPessoa = new DaoPessoa();
+        static DaoPessoa DaoPessoa = new DaoPessoa();
+        static DaoEmpresa DaoEmpresa = new DaoEmpresa();
+        static DaoUser DaoUser = new DaoUser();
 
         static void MenuPrincipal()
         {
@@ -157,7 +160,7 @@ namespace Atividade_Angelo_01
             string endereco = util.LerString("Digite o endereço: ");
             string telefone = util.LerString("Digite o numero do telefone/celular: ");
 
-            SPessoa.SetPessoa(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
+            DaoPessoa.SetPessoa(new Pessoa(codigo, nome, sobrenome, dataNascimento, idade, cpf, rg, endereco, telefone));
         }
 
         static void CadastroEmpresa()
@@ -171,7 +174,7 @@ namespace Atividade_Angelo_01
 
             //listEmpresa.Add(new Empresa(codigo, nome, cnpj, endereco, telefone));
 
-            SPessoa.SetEmpresa(new Empresa(codigo,nome,cnpj,endereco,telefone));
+            DaoEmpresa.SetEmpresa(new Empresa(codigo,nome,cnpj,endereco,telefone));
         }
 
         static void CadastroUser()
@@ -183,7 +186,7 @@ namespace Atividade_Angelo_01
 
             //listUser.Add(new User(codigo, usuario, senha));
 
-            SPessoa.SetUser(new User(codigo,usuario,senha));
+            DaoUser.SetUser(new User(codigo,usuario,senha));
         }
 
         static void Listagem()
@@ -233,7 +236,7 @@ namespace Atividade_Angelo_01
 
         static void ListagemPessoa()
         {
-            listPessoas = SPessoa.GetPessoa();
+            listPessoas = DaoPessoa.GetPessoa();
 
             if (listPessoas.Count() != 0)
             {
@@ -250,7 +253,7 @@ namespace Atividade_Angelo_01
 
         static void ListagemEmpresa()
         {
-            listEmpresa = SPessoa.GetEmpresa();
+            listEmpresa = DaoEmpresa.GetEmpresa();
 
             if (listEmpresa.Count() != 0)
             {
@@ -267,7 +270,7 @@ namespace Atividade_Angelo_01
 
         static void ListagemUsuario()
         {
-            listUser = SPessoa.GetUser();
+            listUser = DaoUser.GetUser();
 
             if (listUser.Count() != 0)
             {
@@ -337,7 +340,7 @@ namespace Atividade_Angelo_01
 
                 int.TryParse(Console.ReadLine(), out escolha);
 
-                listPessoas = SPessoa.GetPessoa();
+                listPessoas = DaoPessoa.GetPessoa();
 
                 switch (escolha)
                 {
@@ -446,7 +449,7 @@ namespace Atividade_Angelo_01
 
                 int.TryParse(Console.ReadLine(), out escolha);
 
-                listEmpresa = SPessoa.GetEmpresa();
+                listEmpresa = DaoEmpresa.GetEmpresa();
 
                 switch (escolha)
                 {
@@ -538,7 +541,7 @@ namespace Atividade_Angelo_01
 
                 int.TryParse(Console.ReadLine(), out escolha);
 
-                listUser = SPessoa.GetUser();
+                listUser = DaoUser.GetUser();
 
                 switch (escolha)
                 {
@@ -600,7 +603,7 @@ namespace Atividade_Angelo_01
                         util.LimpConsl();
                         ListagemPessoa();
                         cod = util.LerInt("Digite o Codigo: ");
-                        if (SPessoa.RemovePessoa(cod))
+                        if (DaoPessoa.RemovePessoa(cod))
                         {
                             Console.WriteLine("Removido com sucesso!");
                         }
@@ -617,7 +620,7 @@ namespace Atividade_Angelo_01
                         util.LimpConsl();
                         ListagemEmpresa();
                         cod = util.LerInt("Digite o Codigo: ");
-                        if (SPessoa.RemoveEmpresa(cod))
+                        if (DaoEmpresa.RemoveEmpresa(cod))
                         {
                             Console.WriteLine("Removido com sucesso!");
                         }
@@ -634,7 +637,7 @@ namespace Atividade_Angelo_01
                         util.LimpConsl();
                         ListagemUsuario();
                         cod = util.LerInt("Digite o Codigo: ");
-                        if (SPessoa.RemoveUser(cod))
+                        if (DaoUser.RemoveUser(cod))
                         {
                             Console.WriteLine("Removido com sucesso!");
                         }
